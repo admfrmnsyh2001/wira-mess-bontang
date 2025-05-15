@@ -1,7 +1,7 @@
 export const config = {
   dev: import.meta.env.DEV,
   baseUrl: '/',
-  authDomain: 'pristine.app',
+  authDomain: 'simplo.id',
   directusUrl: `https://${location.hostname}:8443`,
   directusStaticToken: '',
 };
