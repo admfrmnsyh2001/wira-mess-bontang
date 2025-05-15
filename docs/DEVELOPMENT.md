@@ -7,7 +7,9 @@ pnpm i
 pnpm --filter directus-ext build
 ```
 
-## Run backend for development
+## Run Development
+
+### Backend
 
 ```sh
 pnpm --filter directus dev
@@ -19,9 +21,22 @@ Run extension dev
 pnpm --filter directus-ext dev
 ```
 
-## Run frontend for development
+### Frontend
 
 ```sh
 pnpm --filter app dev
 ```
 
+## Apply
+
+### Snapshot
+
+```sh
+docker compose -f docker-compose.dev.yaml exec directus npx directus schema snapshot ./schema/schema.yml
+```
+
+### Apply
+
+```sh
+docker compose -f docker-compose.dev.yaml exec directus npx directus schema apply ./schema/schema.yml
+```
