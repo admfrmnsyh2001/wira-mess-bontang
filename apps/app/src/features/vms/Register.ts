@@ -130,7 +130,7 @@ export class Register extends BasePage {
     try {
       directusClient.request(createItem('registration', model));
 
-      Toast.open(t('Registrasi telah dicatat, silakan tunggu email dari kami'));
+      Toast.open(t('Your registration is complete. Please wait for an email from us.'));
     } catch (err) {
       console.error('submit err:', err);
       Toast.error(err);

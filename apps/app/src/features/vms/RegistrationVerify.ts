@@ -4,7 +4,6 @@ import { customElement } from 'lit/decorators.js';
 import '@lib/fields/TextField.js';
 import '@lib/fields/TextareaField.js';
 import { CrudForm } from './CrudForm.js';
-import { auth } from '@stores/auth.js';
 
 @customElement('a-registration-verify')
 export class RegistrationVerify extends CrudForm {
