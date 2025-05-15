@@ -1,5 +1,5 @@
 {
-  "name": "pristine",
+  "name": "wira-messbontang",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -12,10 +12,7 @@
   "wireit": {
     "lint": {
       "command": "biome lint --colors=force && pnpm -r lint",
-      "files": [
-        "**/*.ts",
-        "tsconfig.json"
-      ]
+      "files": ["**/*.ts", "tsconfig.json"]
     }
   },
   "keywords": [],

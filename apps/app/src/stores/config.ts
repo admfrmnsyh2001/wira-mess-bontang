@@ -1,5 +1,5 @@
 export const config = {
-  dev: import.meta.env.DEV,
+  dev: false,
   baseUrl: '/',
   authDomain: 'simplo.id',
   directusUrl: `https://${location.hostname}:8443`,

@@ -11,13 +11,23 @@ export function createMenu(): MenuGroup[] {
     {
       items: [
         {
-          active: () => router.ctx.path === '/',
-          url: router.link('/'),
+          active: () => router.ctx.path === '/admin',
+          url: router.link('/admin'),
           label: t('Home'),
         },
       ],
     },
   ];
+
+  groups.push({
+    items: [
+      {
+        active: () => router.ctx.path.startsWith('/admin/registration'),
+        url: router.link('/admin/registration'),
+        label: t('Registration'),
+      },
+    ],
+  });
 
   if (config.dev) {
     groups.push({
