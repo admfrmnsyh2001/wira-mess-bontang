@@ -82,7 +82,7 @@ export class Login extends BasePage {
     try {
       await auth.login(model.username, model.password);
       Toast.open(t('Welcome'));
-      const redirectTo = this.router.ctx.query.redirect ?? '/';
+      const redirectTo = this.router.ctx.query.redirect ?? '/admin';
       this.router.push(redirectTo);
     } catch (err) {
       console.error('submit err:', err);
