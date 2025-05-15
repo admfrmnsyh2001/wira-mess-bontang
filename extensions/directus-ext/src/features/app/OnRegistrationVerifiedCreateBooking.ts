@@ -2,10 +2,10 @@ import type { Service } from '../../lib/directus/Service.js';
 import type { PinGenerator } from '../domain/PinGenerator.js';
 import type { RegistrationVerified } from '../domain/RegistrationVerified.js';
 
-export class OnRegistrationVerifiedCreateVisitor {
+export class OnRegistrationVerifiedCreateBooking {
   constructor(
     readonly registrationService: Service,
-    readonly visitorService: Service,
+    readonly bookingService: Service,
     readonly pinGenerator: PinGenerator,
   ) {}
 
@@ -14,7 +14,7 @@ export class OnRegistrationVerifiedCreateVisitor {
 
     const pin = await this.pinGenerator.generate();
 
-    this.visitorService.createOne({
+    this.bookingService.createOne({
       name: registration.name,
       division: registration.division,
       email: registration.email,

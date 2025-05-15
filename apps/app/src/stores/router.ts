@@ -55,3 +55,8 @@ router.route(
   '/admin/registration/:key/edit',
   lazy(() => import('../features/vms/RegistrationVerify.js')),
 );
+
+router.route(
+  '/admin/booking',
+  lazy(() => import('../features/vms/BookingList.js')),
+);

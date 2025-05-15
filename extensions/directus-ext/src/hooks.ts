@@ -3,7 +3,7 @@ import { lookupService } from './lib/directus/lookupService.js';
 import { PinGenerator } from './features/domain/PinGenerator.js';
 import { RegistrationCreate } from './features/app/RegistrationCreate.js';
 import { RegistrationVerify } from './features/app/RegistrationVerify.js';
-import { OnRegistrationVerifiedCreateVisitor } from './features/app/OnRegistrationVerifiedCreateVisitor.js';
+import { OnRegistrationVerifiedCreateBooking } from './features/app/OnRegistrationVerifiedCreateBooking.js';
 import { RegistrationVerified } from './features/domain/RegistrationVerified.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -54,9 +54,9 @@ export default defineHook(async (hooks, ctx) => {
     }
 
     const registrationService = await lookupService(ctx, 'registration');
-    const visitorService = await lookupService(ctx, 'visitor');
+    const bookingService = await lookupService(ctx, 'booking');
 
-    const listener = new OnRegistrationVerifiedCreateVisitor(registrationService, visitorService, pinGenerator);
+    const listener = new OnRegistrationVerifiedCreateBooking(registrationService, bookingService, pinGenerator);
 
     for (const key of meta.keys) {
       await listener.listen(new RegistrationVerified(key));
