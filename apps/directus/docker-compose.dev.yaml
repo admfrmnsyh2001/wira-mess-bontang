@@ -18,7 +18,8 @@ services:
       - ../../extensions:/directus/extensions
     command: >
       sh -c "
-        npx directus schema apply ./schema/schema.yml &&
+        npx directus bootstrap &&
+        npx directus schema apply -y ./schema/schema.yml &&
         npx directus start
       "
     environment:
