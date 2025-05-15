@@ -45,3 +45,8 @@ router.route(
   '/admin',
   lazy(() => import('../features/common/Home.js')),
 );
+
+router.route(
+  '/admin/registration',
+  lazy(() => import('../features/vms/RegistrationList.js')),
+);
