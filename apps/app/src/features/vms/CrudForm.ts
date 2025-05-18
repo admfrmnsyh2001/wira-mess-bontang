@@ -1,8 +1,8 @@
 import { BaseForm } from '@lib/fw/BaseForm.js';
-import { t } from '@stores/i18n.js';
+import { t } from '../../runtime/i18n.js';
 import { html } from 'lit';
 import '@lib/fields/TextField.js';
-import { directusClient } from '@stores/directusClient.js';
+import { directusClient } from '../../runtime/directusClient.js';
 import { createItem, readItem, updateItem } from '@directus/sdk';
 
 export class CrudForm extends BaseForm {

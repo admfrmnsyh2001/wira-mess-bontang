@@ -2,8 +2,8 @@ import { deleteItem, readItems } from '@directus/sdk';
 import { ConfirmModal } from '@lib/components/ConfirmModal.js';
 import { BaseList } from '@lib/fw/BaseList.js';
 import type { Query, QueryResult } from '@lib/fw/Query.js';
-import { directusClient } from '@stores/directusClient.js';
-import { t } from '@stores/i18n.js';
+import { directusClient } from '../../runtime/directusClient.js';
+import { t } from '../../runtime/i18n.js';
 import { html } from 'lit';
 
 export class CrudList extends BaseList {

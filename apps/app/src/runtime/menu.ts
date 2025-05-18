@@ -20,31 +20,15 @@ export function createMenu(): MenuGroup[] {
   ];
 
   groups.push({
+    hidden: () => !config.dev,
     items: [
       {
-        active: () => router.ctx.path.startsWith('/admin/registration'),
-        url: router.link('/admin/registration'),
-        label: t('Registration'),
-      },
-      {
-        active: () => router.ctx.path.startsWith('/admin/booking'),
-        url: router.link('/admin/booking'),
-        label: t('Booking'),
+        active: () => router.ctx.path.startsWith('/test'),
+        label: 'Test',
+        url: router.link('/test'),
       },
     ],
   });
-
-  if (config.dev) {
-    groups.push({
-      items: [
-        {
-          active: () => router.ctx.path.startsWith('/test'),
-          label: 'Test',
-          url: router.link('/test'),
-        },
-      ],
-    });
-  }
 
   groups.push({
     items: [

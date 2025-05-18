@@ -5,10 +5,10 @@ import '@lib/components/Button.js';
 import { RecordField } from '@lib/fields/RecordField.js';
 import { Toast } from '@lib/components/Toast.js';
 import { BasePage } from '@lib/fw/BasePage.js';
-import { directusClient } from '@stores/directusClient.js';
+import { directusClient } from '../../runtime/directusClient.js';
 import { createItem } from '@directus/sdk';
 import logo from '@stores/img/simplo.png';
-import { t } from '@stores/i18n.js';
+import { t } from '../../runtime/i18n.js';
 
 @customElement('a-register')
 export class Register extends BasePage {

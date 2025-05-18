@@ -42,6 +42,11 @@ router.route(
 );
 
 router.route(
+  '/test',
+  lazy(() => import('../features/common/Test.js')),
+);
+
+router.route(
   '/admin',
   lazy(() => import('../features/common/Home.js')),
 );

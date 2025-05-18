@@ -1,4 +1,4 @@
-import { t } from '@stores/i18n.js';
+import { t } from '../../runtime/i18n.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import '@lib/fields/TextField.js';

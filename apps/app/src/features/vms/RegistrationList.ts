@@ -1,5 +1,5 @@
 import type { Query, QueryResult } from '@lib/fw/Query.js';
-import { i18n } from '@stores/i18n.js';
+import { i18n } from '../../runtime/i18n.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { CrudList } from './CrudList.js';
