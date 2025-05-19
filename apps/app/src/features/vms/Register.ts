@@ -56,7 +56,7 @@ export class Register extends BasePage {
                     name="email"
                     label=${t('Email')}
                     required
-                    .rules=${[email]}
+                    .rules=${[email()]}
                   ></f-text-field>
                 </div>
               </div>
