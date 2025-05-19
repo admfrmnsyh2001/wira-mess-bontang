@@ -7,8 +7,9 @@ import { Toast } from '@lib/components/Toast.js';
 import { BasePage } from '@lib/fw/BasePage.js';
 import { directusClient } from '../../runtime/directusClient.js';
 import { createItem } from '@directus/sdk';
-import logo from '@stores/img/simplo.png';
+import logo from '@runtime/img/simplo.png';
 import { t } from '../../runtime/i18n.js';
+import { email } from '@lib/fields/rules.js';
 
 @customElement('a-register')
 export class Register extends BasePage {
@@ -55,6 +56,7 @@ export class Register extends BasePage {
                     name="email"
                     label=${t('Email')}
                     required
+                    .rules=${[email]}
                   ></f-text-field>
                 </div>
               </div>
