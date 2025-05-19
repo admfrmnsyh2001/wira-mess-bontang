@@ -30,7 +30,7 @@ export function createMenu(): MenuGroup[] {
     ],
   });
 
-  groups.push({
+    groups.push({
     hidden: () => !config.dev,
     items: [
       {
