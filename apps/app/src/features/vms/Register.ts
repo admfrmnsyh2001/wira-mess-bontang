@@ -26,7 +26,17 @@ export class Register extends BasePage {
   @state()
   private submitting = false;
 
+  @state()
+  private submitted = false;
+
   protected render(): unknown {
+    if (this.submitted) {
+      return html`
+        <div class="alert alert-success text-center" role="alert">
+          Registrasi akan segera di proses. Silakan kembali ke <a href="/" rel="external">Halaman Utama</a>
+        </div>
+      `;
+    }
     return html`
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
@@ -130,14 +140,14 @@ export class Register extends BasePage {
 
     this.submitting = true;
     try {
-      directusClient.request(createItem('registration', model));
-
+      await directusClient.request(createItem('registration', model));
       Toast.open(t('Your registration is complete. Please wait for an email from us.'));
     } catch (err) {
       console.error('submit err:', err);
       Toast.error(err);
     } finally {
       this.submitting = false;
+      this.submitted = true;
     }
   }
 }
