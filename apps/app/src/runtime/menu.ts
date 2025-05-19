@@ -30,7 +30,16 @@ export function createMenu(): MenuGroup[] {
     ],
   });
 
-
+  groups.push({
+    hidden: () => !config.dev,
+    items: [
+      {
+        active: () => router.ctx.path.startsWith('/admin/booking'),
+        label: 'Booking',
+        url: router.link('/admin/booking'),
+      },
+    ],
+  });
 
   groups.push({
     items: [
