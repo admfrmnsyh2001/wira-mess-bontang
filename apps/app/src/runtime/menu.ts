@@ -23,12 +23,14 @@ export function createMenu(): MenuGroup[] {
     hidden: () => !config.dev,
     items: [
       {
-        active: () => router.ctx.path.startsWith('/test'),
-        label: 'Test',
-        url: router.link('/test'),
+        active: () => router.ctx.path.startsWith('/admin/registration'),
+        label: 'Registration',
+        url: router.link('/admin/registration'),
       },
     ],
   });
+
+
 
   groups.push({
     items: [
