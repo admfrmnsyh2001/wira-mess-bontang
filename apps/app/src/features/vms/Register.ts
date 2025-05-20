@@ -33,7 +33,8 @@ export class Register extends BasePage {
     if (this.submitted) {
       return html`
         <div class="alert alert-success text-center" role="alert">
-          Registrasi akan segera di proses. Silakan kembali ke <a href="/" rel="external">Halaman Utama</a>
+        ${t('The registration will be processed shortly. Please return to the')}
+        <a href="/" rel="external">${t('Main Page')}</a>.
         </div>
       `;
     }
