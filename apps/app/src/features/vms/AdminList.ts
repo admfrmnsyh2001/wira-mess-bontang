@@ -42,10 +42,10 @@ export class AdminList extends CrudList {
 
   protected renderTableColumns(): unknown {
     return html`
-      <c-table-column name="name" label=${t('Name')}></c-table-column>
-      <c-table-column name="userName" label=${t('User Name')}></c-table-column>
-      <c-table-column name="password" label=${t('Password')}></c-table-column>
-      <c-table-column name="role" label=${t('Role')}></c-table-column>
+      <c-table-column name="first_name" label=${t('First Name')}></c-table-column>
+      <c-table-column name="last_name" label=${t('Last Name')}></c-table-column>
+      <c-table-column name="email" label=${t('Email')}></c-table-column>
+      <c-table-column name="master" label=${t('Master')}></c-table-column>
     `;
   }
 }
