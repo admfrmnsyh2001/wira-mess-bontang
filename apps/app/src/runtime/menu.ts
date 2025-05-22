@@ -31,6 +31,11 @@ export function createMenu(): MenuGroup[] {
         label: 'Booking',
         url: router.link('/admin/booking'),
       },
+      {
+        active: () => router.ctx.path.startsWith('/admin/admin'),
+        label: 'Admin',
+        url: router.link('/admin/admin'),
+      },
     ],
   });
 

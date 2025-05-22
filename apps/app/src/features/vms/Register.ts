@@ -142,13 +142,13 @@ export class Register extends BasePage {
     this.submitting = true;
     try {
       await directusClient.request(createItem('registration', model));
+      this.submitted = true;
       Toast.open(t('Your registration is complete. Please wait for an email from us.'));
     } catch (err) {
       console.error('submit err:', err);
       Toast.error(err);
     } finally {
       this.submitting = false;
-      this.submitted = true;
     }
   }
 }
