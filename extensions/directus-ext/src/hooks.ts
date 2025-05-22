@@ -5,6 +5,9 @@ import { RegistrationCreate } from './features/app/RegistrationCreate.js';
 import { RegistrationVerify } from './features/app/RegistrationVerify.js';
 import { OnRegistrationVerifiedCreateBooking } from './features/app/OnRegistrationVerifiedCreateBooking.js';
 import { RegistrationVerified } from './features/domain/RegistrationVerified.js';
+import { OnBookingCreatedSendEmail } from './features/app/OnBookingCreatedSendEmail.js';
+import { BookingCreated } from './features/domain/BookingCreated.js';
+import { lookupMailer } from './lib/directus/lookupMailer.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -61,5 +64,22 @@ export default defineHook(async (hooks, ctx) => {
     for (const key of meta.keys) {
       await listener.listen(new RegistrationVerified(key));
     }
+  });
+
+  hooks.action('booking.items.create', async (payload) => {
+    const mailer = await lookupMailer(ctx);
+    const listener = new OnBookingCreatedSendEmail(mailer);
+    await listener.listen(
+      new BookingCreated({
+        id: payload.id,
+        name: payload.name,
+        division: payload.division,
+        email: payload.email,
+        startDate: payload.start_date,
+        endDate: payload.end_date,
+        room: payload.room,
+        pin: payload.pin,
+      }),
+    );
   });
 });
