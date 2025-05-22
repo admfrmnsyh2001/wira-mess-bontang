@@ -3,6 +3,7 @@ import { i18n } from '../../runtime/i18n.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { CrudList } from './CrudList.js';
+import { ConfirmModal } from '@lib/components/ConfirmModal.js';
 
 const t = i18n.createTranslator('admin');
 
@@ -12,8 +13,32 @@ export class RegistrationList extends CrudList {
   protected collection = 'registration';
 
   protected canAdd = false;
-  protected canEdit = true;
+  protected canEdit = false;
   protected canRemove = false;
+
+  async routeCallback(): Promise<void> {
+    this.itemActions.push({
+      variant: 'success',
+      label: 'Verify',
+      icon: 'check2-circle',
+      link: (item) => this.router.link(`${this.router.ctx.path}/${item.id}/edit`),
+    });
+
+    this.itemActions.push({
+      variant: 'danger',
+      label: 'Reject',
+      icon: 'x-circle',
+      execute: async (item) => {
+        const confirmed = await ConfirmModal.show();
+        if (!confirmed) {
+          return;
+        }
+        await this.removeItem(item);
+      },
+    });
+
+    await super.routeCallback();
+  }
 
   protected async load(query: Query): Promise<QueryResult<Record<string, unknown>>> {
     query.filter = {
