@@ -65,3 +65,8 @@ router.route(
   '/admin/booking',
   lazy(() => import('../features/vms/BookingList.js')),
 );
+
+router.route(
+  '/admin/admin',
+  lazy(() => import('../features/vms/AdminList.js')),
+);
