@@ -6,7 +6,39 @@ export class Seeder {
 
   async execute() {
     await this.seedPermissions();
+    await this.seedAdmins();
     await this.seedRooms();
+  }
+
+  async seedAdmins() {
+    const adminService = await lookupService(this.ctx, 'admin');
+
+    const admins = await adminService.readByQuery({ limit: 1 });
+    if (admins.length !== 0) {
+      return;
+    }
+
+    this.ctx.logger.info('seeding admins...');
+
+    const UserService = this.ctx.services.UsersService;
+
+    const schema = await this.ctx.getSchema();
+
+    const userService = new UserService({ schema });
+    const [user] = await userService.readByQuery({
+      query: {
+        email: { contains: 'admin@' },
+      },
+      limit: 1,
+    });
+
+    await adminService.createOne({
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      password: '',
+      master: true,
+    });
   }
 
   async seedPermissions() {
