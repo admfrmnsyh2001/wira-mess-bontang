@@ -139,72 +139,34 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: admin
-    field: name
-    type: string
+    field: master
+    type: boolean
     meta:
       collection: admin
       conditions: null
       display: null
       display_options: null
-      field: name
+      field: master
       group: null
       hidden: false
-      interface: input
+      interface: boolean
       note: null
       options: null
       readonly: false
       required: true
-      sort: 2
-      special: null
+      sort: 6
+      special:
+        - cast-boolean
       translations: null
       validation: null
       validation_message: null
       width: full
     schema:
-      name: name
+      name: master
       table: admin
-      data_type: varchar
+      data_type: boolean
       default_value: null
-      max_length: 255
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: admin
-    field: username
-    type: string
-    meta:
-      collection: admin
-      conditions: null
-      display: null
-      display_options: null
-      field: username
-      group: null
-      hidden: false
-      interface: input
-      note: null
-      options: null
-      readonly: false
-      required: true
-      sort: 3
-      special: null
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: username
-      table: admin
-      data_type: varchar
-      default_value: null
-      max_length: 255
+      max_length: null
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
@@ -231,8 +193,8 @@ fields:
       note: null
       options: null
       readonly: false
-      required: true
-      sort: 4
+      required: false
+      sort: 5
       special: null
       translations: null
       validation: null
@@ -256,34 +218,111 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: admin
-    field: master
-    type: boolean
+    field: first_name
+    type: string
     meta:
       collection: admin
       conditions: null
       display: null
       display_options: null
-      field: master
+      field: first_name
       group: null
       hidden: false
-      interface: boolean
+      interface: input
       note: null
       options: null
       readonly: false
       required: true
-      sort: 5
-      special:
-        - cast-boolean
+      sort: 2
+      special: null
       translations: null
       validation: null
       validation_message: null
       width: full
     schema:
-      name: master
+      name: first_name
       table: admin
-      data_type: boolean
+      data_type: varchar
       default_value: null
-      max_length: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: admin
+    field: last_name
+    type: string
+    meta:
+      collection: admin
+      conditions: null
+      display: null
+      display_options: null
+      field: last_name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: last_name
+      table: admin
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: admin
+    field: email
+    type: string
+    meta:
+      collection: admin
+      conditions: null
+      display: null
+      display_options: null
+      field: email
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: email
+      table: admin
+      data_type: varchar
+      default_value: null
+      max_length: 255
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
