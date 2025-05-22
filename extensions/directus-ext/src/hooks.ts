@@ -8,33 +8,14 @@ import { RegistrationVerified } from './features/domain/RegistrationVerified.js'
 import { OnBookingCreatedSendEmail } from './features/app/OnBookingCreatedSendEmail.js';
 import { BookingCreated } from './features/domain/BookingCreated.js';
 import { lookupMailer } from './lib/directus/lookupMailer.js';
+import { Seeder } from './features/app/Seeder.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 export default defineHook(async (hooks, ctx) => {
   hooks.action('server.start', async () => {
-    const roomService = await lookupService(ctx, 'room');
-
-    const rooms = await roomService.readByQuery({
-      limit: 1,
-    });
-
-    if (rooms.length !== 0) {
-      return;
-    }
-
-    ctx.logger.info('seeding rooms...');
-    await roomService.createMany([
-      { id: '01', name: '01' },
-      { id: '02', name: '02' },
-      { id: '03', name: '03' },
-      { id: '04', name: '04' },
-      { id: '05', name: '05' },
-      { id: '06', name: '06' },
-      { id: '07', name: '07' },
-      { id: '08', name: '08' },
-      { id: '09', name: '09' },
-    ]);
+    const seeder = new Seeder(ctx);
+    await seeder.execute();
   });
 
   const pinGenerator = new PinGenerator();
