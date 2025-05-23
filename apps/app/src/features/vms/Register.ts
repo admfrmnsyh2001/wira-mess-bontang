@@ -32,10 +32,15 @@ export class Register extends BasePage {
   protected render(): unknown {
     if (this.submitted) {
       return html`
-        <div class="alert alert-success text-center" role="alert">
-        ${t('The registration will be processed shortly. Please return to the')}
-        <a href="/" rel="external">${t('Main Page')}</a>.
+      <div>
+        <div class="text-center mb-4 mt-4">
+          <img src=${logo} alt="Registration Image" style="width: 50%; max-width: 500px; height: auto;">
         </div>
+        <div class="alert alert-success text-center" role="alert">
+          ${t('The registration will be processed shortly. Please return to the')}
+          <a href="/" rel="external">${t('Register Page')}</a>.
+        </div>
+      </div>
       `;
     }
     return html`
