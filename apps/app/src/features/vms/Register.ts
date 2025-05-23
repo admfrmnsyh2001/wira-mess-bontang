@@ -144,6 +144,24 @@ export class Register extends BasePage {
       return;
     }
 
+    const today = new Date().toISOString().split('T')[0];
+
+    if (model.start_date < today) {
+      this.errors = {
+        ...this.errors,
+        start_date: [t('Start date must be today or later')],
+      };
+      return;
+    }
+
+    if (model.end_date < today) {
+      this.errors = {
+        ...this.errors,
+        end_date: [t('End Date must be today or later.')],
+      };
+      return;
+    }
+
     this.submitting = true;
     try {
       await directusClient.request(createItem('registration', model));
