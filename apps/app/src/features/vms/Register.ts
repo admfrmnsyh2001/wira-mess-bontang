@@ -34,7 +34,7 @@ export class Register extends BasePage {
       return html`
       <div>
         <div class="text-center mb-4 mt-4">
-          <img src=${logo} alt="Registration Image" style="width: 50%; max-width: 500px; height: auto;">
+          <img src=${logo} alt="Simplo Logo" style="width: 50%; max-width: 500px; height: auto;">
         </div>
         <div class="alert alert-success text-center" role="alert">
           ${t('The registration will be processed shortly. Please return to the')}
