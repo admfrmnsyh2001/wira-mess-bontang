@@ -32,15 +32,15 @@ export class Register extends BasePage {
   protected render(): unknown {
     if (this.submitted) {
       return html`
-      <div>
-        <div class="text-center mb-4 mt-4">
-          <img src=${logo} alt="Simplo Logo" style="width: 50%; max-width: 500px; height: auto;">
+        <div>
+          <div class="text-center mb-4 mt-4">
+            <img src=${logo} alt="Simplo Logo" style="width: 50%; height: auto;">
+          </div>
+          <div class="alert alert-success text-center" role="alert">
+            ${t('The registration will be processed shortly. Please return to the')}
+            <a href="/" rel="external">${t('Register Page')}</a>.
+          </div>
         </div>
-        <div class="alert alert-success text-center" role="alert">
-          ${t('The registration will be processed shortly. Please return to the')}
-          <a href="/" rel="external">${t('Register Page')}</a>.
-        </div>
-      </div>
       `;
     }
     return html`
@@ -146,15 +146,15 @@ export class Register extends BasePage {
 
     const today = new Date().toISOString().split('T')[0];
 
-    if (model.start_date < today) {
+    if (model.start_date >= today) {
       this.errors = {
         ...this.errors,
-        start_date: [t('Start date must be today or later')],
+        start_date: [t('Start date must be today or past')],
       };
       return;
     }
 
-    if (model.end_date < today) {
+    if (model.end_date <= today) {
       this.errors = {
         ...this.errors,
         end_date: [t('End Date must be today or later.')],
