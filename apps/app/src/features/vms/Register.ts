@@ -32,9 +32,14 @@ export class Register extends BasePage {
   protected render(): unknown {
     if (this.submitted) {
       return html`
-        <div class="alert alert-success text-center" role="alert">
-        ${t('The registration will be processed shortly. Please return to the')}
-        <a href="/" rel="external">${t('Main Page')}</a>.
+        <div>
+          <div class="text-center mb-4 mt-4">
+            <img src=${logo} alt="Simplo Logo" style="width: 50%; height: auto;">
+          </div>
+          <div class="alert alert-success text-center" role="alert">
+            ${t('The registration will be processed shortly. Please return to the')}
+            <a href="/" rel="external">${t('Register Page')}</a>.
+          </div>
         </div>
       `;
     }
@@ -136,6 +141,24 @@ export class Register extends BasePage {
     const model = record.value;
 
     if (!model) {
+      return;
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+
+    if (model.start_date > today) {
+      this.errors = {
+        ...this.errors,
+        start_date: [t('Start date must be today or past')],
+      };
+      return;
+    }
+
+    if (model.end_date <= model.start_date) {
+      this.errors = {
+        ...this.errors,
+        end_date: [t('End date cannot be less than start date.')],
+      };
       return;
     }
 
