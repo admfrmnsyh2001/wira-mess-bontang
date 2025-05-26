@@ -154,10 +154,10 @@ export class Register extends BasePage {
       return;
     }
 
-    if (model.end_date <= today) {
+    if (model.end_date <= model.start_date) {
       this.errors = {
         ...this.errors,
-        end_date: [t('End Date must be today or later.')],
+        end_date: [t('End date cannot be less than start date.')],
       };
       return;
     }
