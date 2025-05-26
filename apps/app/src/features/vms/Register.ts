@@ -146,7 +146,7 @@ export class Register extends BasePage {
 
     const today = new Date().toISOString().split('T')[0];
 
-    if (model.start_date >= today) {
+    if (model.start_date > today) {
       this.errors = {
         ...this.errors,
         start_date: [t('Start date must be today or past')],
