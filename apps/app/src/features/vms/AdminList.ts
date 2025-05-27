@@ -21,7 +21,7 @@ export class AdminList extends CrudList {
       variant: 'primary',
       label: 'Add',
       icon: 'person-add',
-      link: () => this.router.link(`${this.router.ctx.path}/-/add`),
+      link: () => this.router.link(`${this.router.ctx.path}/add`),
     });
 
     this.itemActions.push({

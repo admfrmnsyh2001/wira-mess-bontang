@@ -70,3 +70,8 @@ router.route(
   '/admin/admin',
   lazy(() => import('../features/vms/AdminList.js')),
 );
+
+router.route(
+  '/admin/admin/add',
+  lazy(() => import('../features/vms/AddAdmin.js')),
+);
