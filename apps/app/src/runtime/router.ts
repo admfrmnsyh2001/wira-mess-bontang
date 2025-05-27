@@ -72,6 +72,6 @@ router.route(
 );
 
 router.route(
-  '/admin/admin/add',
+  '/admin/admin/-/add',
   lazy(() => import('../features/vms/AddAdmin.js')),
 );
