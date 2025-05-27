@@ -87,21 +87,23 @@ export class Register extends BasePage {
               </div>
 
               <div class="mb-3 row">
-                  <div class="col">
-                    <f-text-field type="date"
-                      name="start_date"
-                      label=${t('Start Date')}
-                      required
-                    ></f-text-field>
-                  </div>
+                <div class="col">
+                  <f-text-field type="date"
+                    name="start_date"
+                    label=${t('Start Date')}
+                    .rules=${[this.validateStartDate]}
+                    required
+                  ></f-text-field>
+                </div>
 
-                  <div class="col">
-                    <f-text-field type="date"
-                      name="end_date"
-                      label=${t('End Date')}
-                      required
-                    ></f-text-field>
-                  </div>
+                <div class="col">
+                  <f-text-field type="date"
+                    name="end_date"
+                    label=${t('End Date')}
+                    .rules=${[this.validateEndDate]}
+                    required
+                  ></f-text-field>
+                </div>
               </div>
 
             </f-record-field>
@@ -128,6 +130,22 @@ export class Register extends BasePage {
     this.errors = target.errors;
   }
 
+  private validateStartDate(startDate: string): string | undefined {
+    const today = new Date().toISOString().split('T')[0];
+    if (startDate < today) {
+      return t('the start date must be today or later.');
+    }
+  }
+
+  private validateEndDate = (endDate: string) => {
+    const startDate = this.value?.start_date;
+    if (!startDate) {
+      return t('the start date is required.');
+    }
+    if (endDate < startDate) {
+      return t('end date cannot be less than start date.');
+    }
+  };
   private async onSubmit(evt: Event) {
     evt.preventDefault();
 
@@ -141,24 +159,6 @@ export class Register extends BasePage {
     const model = record.value;
 
     if (!model) {
-      return;
-    }
-
-    const today = new Date().toISOString().split('T')[0];
-
-    if (model.start_date > today) {
-      this.errors = {
-        ...this.errors,
-        start_date: [t('Start date must be today or past')],
-      };
-      return;
-    }
-
-    if (model.end_date <= model.start_date) {
-      this.errors = {
-        ...this.errors,
-        end_date: [t('End date cannot be less than start date.')],
-      };
       return;
     }
 
