@@ -17,6 +17,8 @@ import { OnAdminRemovedRemoveUser } from './features/app/OnAdminRemovedRemoveUse
 import { AdminRemoved } from './features/domain/AdminRemoved.js';
 import { OnBookingCreatedCreateAccessRight } from './features/app/OnBookingCreatedCreateAccessRight.js';
 import { lookupBiostarClient } from './runtime/biostarClient.js';
+import { OnBookingExpiredRemoveAccessRight } from './features/app/OnBookingExpiredRemoveAccessRight.js';
+import { BookingExpired } from './features/domain/BookingExpired.js';
 import { config } from './runtime/config.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -58,12 +60,12 @@ export default defineHook(async (hooks, ctx) => {
 
   hooks.action('booking.items.create', async (meta) => {
     const evt = new BookingCreated({
-      id: meta.payload.id,
+      id: meta.key,
       name: meta.payload.name,
       division: meta.payload.division,
       email: meta.payload.email,
-      startDate: meta.payload.start_date,
-      endDate: meta.payload.end_date,
+      startDate: new Date(meta.payload.start_date),
+      endDate: new Date(meta.payload.end_date),
       room: meta.payload.room,
       pin: meta.payload.pin,
     });
@@ -74,6 +76,32 @@ export default defineHook(async (hooks, ctx) => {
 
     const mailer = await lookupMailer(ctx);
     await new OnBookingCreatedSendEmail(mailer).listen(evt);
+  });
+
+  hooks.action('booking.items.update', async (meta) => {
+    if (meta.payload.status !== 'expired') {
+      return;
+    }
+
+    const bookingService = await lookupService(ctx, 'booking');
+    const biostarClient = await lookupBiostarClient(ctx);
+
+    const listener = new OnBookingExpiredRemoveAccessRight(biostarClient);
+
+    for (const key of meta.keys) {
+      const booking = await bookingService.readOne(key);
+      const evt = new BookingExpired({
+        id: booking.id,
+        name: booking.name,
+        division: booking.division,
+        email: booking.email,
+        startDate: new Date(booking.start_date),
+        endDate: new Date(booking.end_date),
+        room: booking.room,
+        pin: booking.pin,
+      });
+      await listener.listen(evt);
+    }
   });
 
   hooks.action('admin.items.create', async (meta) => {
@@ -98,4 +126,26 @@ export default defineHook(async (hooks, ctx) => {
       await new OnAdminRemovedRemoveUser(userService).listen(new AdminRemoved(admin.email));
     }
   });
+
+  const onSchedule = async () => {
+    if (!config.accessRightEnabled) {
+      return;
+    }
+
+    const bookingService = await lookupService(ctx, 'booking');
+
+    const now = new Date();
+    const ids = await bookingService.updateByQuery(
+      {
+        filter: {
+          status: { _eq: 'registered' },
+          end_date: { _lt: now.toJSON() },
+        },
+      },
+      { status: 'expired' },
+    );
+    ctx.logger.info('expired found: %d', ids.length);
+  };
+  hooks.schedule('0 * * * *', onSchedule);
+  onSchedule();
 });

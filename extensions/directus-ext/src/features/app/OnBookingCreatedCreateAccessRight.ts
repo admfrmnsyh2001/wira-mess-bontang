@@ -22,7 +22,7 @@ export class OnBookingCreatedCreateAccessRight {
     const checkinTime = config.checkinTime;
     const checkoutTime = config.checkoutTime;
     const startTime = new Date(`${evt.startDate} ${checkinTime}`);
-    const expiryTime = new Date(new Date(`${evt.endDate} ${checkoutTime}`).getTime() + 24 * 60 * 60 * 1000);
+    const expiryTime = new Date(`${evt.endDate} ${checkoutTime}`);
     const accessGroupId = room.access_group;
 
     const params = {
