@@ -3,7 +3,7 @@ import { CrudList } from './CrudList.js';
 import { customElement } from 'lit/decorators.js';
 import { i18n } from '../../runtime/i18n.js';
 import { ConfirmModal } from '@lib/components/ConfirmModal.js';
-import { Toast } from 'bootstrap';
+import { Toast } from '@lib/components/Toast.js';
 
 const t = i18n.createTranslator('admin');
 
@@ -31,10 +31,10 @@ export class AdminList extends CrudList {
       execute: async (item) => {
         const confirmed = await ConfirmModal.show();
         const adminMaster = item.master;
-        if (!confirmed) {
-          return;
-        }
         if (adminMaster) {
+          return Toast.error(t('Sorry, Master accounts are protected and cannot be deleted.'));
+        }
+        if (!confirmed) {
           return;
         }
         await this.removeItem(item);
