@@ -85,15 +85,15 @@ export class Seeder {
 
     this.ctx.logger.info('seeding rooms...');
     await roomService.createMany([
-      { id: '01', name: '01' },
-      { id: '02', name: '02' },
-      { id: '03', name: '03' },
-      { id: '04', name: '04' },
-      { id: '05', name: '05' },
-      { id: '06', name: '06' },
-      { id: '07', name: '07' },
-      { id: '08', name: '08' },
-      { id: '09', name: '09' },
+      { id: '01', name: 'Room 01', access_group: '8' },
+      { id: '02', name: 'Room 02', access_group: '7' },
+      { id: '03', name: 'Room 03', access_group: '5' },
+      { id: '04', name: 'Room 04', access_group: '9' },
+      { id: '05', name: 'Room 05' },
+      { id: '06', name: 'Room 06' },
+      { id: '07', name: 'Room 07' },
+      { id: '08', name: 'Room 08' },
+      { id: '09', name: 'Room 09' },
     ]);
   }
 }
