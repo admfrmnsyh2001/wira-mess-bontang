@@ -4,7 +4,7 @@ vendor: sqlite
 collections:
   - collection: admin
     meta:
-      accountability: all
+      accountability: null
       archive_app_filter: true
       archive_field: null
       archive_value: null
@@ -28,7 +28,7 @@ collections:
       name: admin
   - collection: booking
     meta:
-      accountability: all
+      accountability: null
       archive_app_filter: true
       archive_field: null
       archive_value: null
@@ -52,7 +52,7 @@ collections:
       name: booking
   - collection: registration
     meta:
-      accountability: all
+      accountability: null
       archive_app_filter: true
       archive_field: null
       archive_value: null
@@ -76,7 +76,7 @@ collections:
       name: registration
   - collection: room
     meta:
-      accountability: all
+      accountability: null
       archive_app_filter: true
       archive_field: null
       archive_value: null
