@@ -16,7 +16,7 @@ export class OnAdminCreatedCreateUser {
       throw new Error('unknown administrator role');
     }
 
-    this.userService.createOne({
+    await this.userService.createOne({
       first_name: evt.first_name,
       last_name: evt.last_name,
       email: evt.email,

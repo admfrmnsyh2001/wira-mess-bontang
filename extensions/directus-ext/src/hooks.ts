@@ -13,6 +13,8 @@ import { OnAdminCreatedCreateUser } from './features/app/OnAdminCreatedCreateUse
 import { AdminCreated } from './features/domain/AdminCreated.js';
 import { lookupUserService } from './lib/directus/lookupUserService.js';
 import { lookupRoleService } from './lib/directus/lookupRoleService.js';
+import { OnAdminRemovedRemoveUser } from './features/app/OnAdminRemovedRemoveUser.js';
+import { AdminRemoved } from './features/domain/AdminRemoved.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -78,5 +80,15 @@ export default defineHook(async (hooks, ctx) => {
         password: meta.payload.password,
       }),
     );
+  });
+
+  hooks.filter('admin.items.delete', async (payload) => {
+    const adminService = await lookupService(ctx, 'admin');
+    const userService = await lookupUserService(ctx);
+
+    for (const key of payload as string[]) {
+      const admin = await adminService.readOne(key);
+      await new OnAdminRemovedRemoveUser(userService).listen(new AdminRemoved(admin.email));
+    }
   });
 });
