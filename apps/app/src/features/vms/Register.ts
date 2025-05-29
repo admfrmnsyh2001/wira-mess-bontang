@@ -40,13 +40,20 @@ export class Register extends BasePage {
   protected render(): unknown {
     if (this.submitted) {
       return html`
-        <div>
-          <div class="text-center mb-4 mt-4">
-            <img src=${logo} alt="Simplo Logo" style="width: 50%; height: auto;">
-          </div>
-          <div class="alert alert-success text-center" role="alert">
-            ${t('The registration will be processed shortly. Please return to the')}
-            <a href="/">${t('Register Page')}</a>.
+        <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 p-3">
+          <div class="text-center" style="max-width: 600px;">
+            <div class="mb-4">
+              <i class="bi bi-clock" style="font-size: 4rem; color: #0d6efd;"></i>
+            </div>
+
+            <div class="alert alert-success">
+              <h3>${t('Processed')}</h3>
+              ${t('The registration will be processed shortly. Please return to the register page')}
+            </div>
+
+            <a href="/" class="btn btn-primary">
+              ${t('Register Page')}
+            </a>
           </div>
         </div>
       `;
