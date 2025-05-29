@@ -15,6 +15,8 @@ import { lookupUserService } from './lib/directus/lookupUserService.js';
 import { lookupRoleService } from './lib/directus/lookupRoleService.js';
 import { OnAdminRemovedRemoveUser } from './features/app/OnAdminRemovedRemoveUser.js';
 import { AdminRemoved } from './features/domain/AdminRemoved.js';
+import { OnBookingCreatedCreateAccessRight } from './features/app/OnBookingCreatedCreateAccessRight.js';
+import { lookupBiostarClient } from './runtime/biostarClient.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -54,19 +56,23 @@ export default defineHook(async (hooks, ctx) => {
   });
 
   hooks.action('booking.items.create', async (meta) => {
+    const evt = new BookingCreated({
+      id: meta.payload.id,
+      name: meta.payload.name,
+      division: meta.payload.division,
+      email: meta.payload.email,
+      startDate: meta.payload.start_date,
+      endDate: meta.payload.end_date,
+      room: meta.payload.room,
+      pin: meta.payload.pin,
+    });
+
+    const roomService = await lookupService(ctx, 'room');
+    const biostarClient = await lookupBiostarClient(ctx);
+    await new OnBookingCreatedCreateAccessRight(biostarClient, roomService).listen(evt);
+
     const mailer = await lookupMailer(ctx);
-    await new OnBookingCreatedSendEmail(mailer).listen(
-      new BookingCreated({
-        id: meta.payload.id,
-        name: meta.payload.name,
-        division: meta.payload.division,
-        email: meta.payload.email,
-        startDate: meta.payload.start_date,
-        endDate: meta.payload.end_date,
-        room: meta.payload.room,
-        pin: meta.payload.pin,
-      }),
-    );
+    await new OnBookingCreatedSendEmail(mailer).listen(evt);
   });
 
   hooks.action('admin.items.create', async (meta) => {
