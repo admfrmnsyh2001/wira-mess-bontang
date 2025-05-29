@@ -47,19 +47,19 @@ export default defineHook(async (hooks, ctx) => {
     }
   });
 
-  hooks.action('booking.items.create', async (payload) => {
+  hooks.action('booking.items.create', async (meta) => {
     const mailer = await lookupMailer(ctx);
     const listener = new OnBookingCreatedSendEmail(mailer);
     await listener.listen(
       new BookingCreated({
-        id: payload.id,
-        name: payload.name,
-        division: payload.division,
-        email: payload.email,
-        startDate: payload.start_date,
-        endDate: payload.end_date,
-        room: payload.room,
-        pin: payload.pin,
+        id: meta.payload.id,
+        name: meta.payload.name,
+        division: meta.payload.division,
+        email: meta.payload.email,
+        startDate: meta.payload.start_date,
+        endDate: meta.payload.end_date,
+        room: meta.payload.room,
+        pin: meta.payload.pin,
       }),
     );
   });
