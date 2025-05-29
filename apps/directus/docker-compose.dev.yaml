@@ -22,6 +22,8 @@ services:
         npx directus schema apply -y ./schema/schema.yml &&
         npx directus start
       "
+    env_file:
+      - .env
     environment:
       KEY: "directus-key"
       SECRET: "directus-secret"
@@ -42,9 +44,6 @@ services:
       CORS_CREDENTIALS: 'true'
       CORS_MAX_AGE: '180000'
       EXTENSIONS_AUTO_RELOAD: true
-      # APP_BIOSTAR_HOST: "host.docker.internal"
-      # APP_BIOSTAR_PASSWORD: "Password1"
-      # APP_BIOSTAR_USER_GROUP: "1002"
 
   # app:
   #   restart: always

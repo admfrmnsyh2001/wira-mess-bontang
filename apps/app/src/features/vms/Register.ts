@@ -29,6 +29,14 @@ export class Register extends BasePage {
   @state()
   private submitted = false;
 
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    if (this.router.ctx.query.submitted) {
+      this.submitted = true;
+    }
+  }
+
   protected render(): unknown {
     if (this.submitted) {
       return html`
@@ -38,7 +46,7 @@ export class Register extends BasePage {
           </div>
           <div class="alert alert-success text-center" role="alert">
             ${t('The registration will be processed shortly. Please return to the')}
-            <a href="/" rel="external">${t('Register Page')}</a>.
+            <a href="/">${t('Register Page')}</a>.
           </div>
         </div>
       `;
@@ -130,14 +138,14 @@ export class Register extends BasePage {
     this.errors = target.errors;
   }
 
-  private validateStartDate(startDate: string): string | undefined {
+  private validateStartDate<T>(startDate: T): T | undefined {
     const today = new Date().toISOString().split('T')[0];
     if (startDate < today) {
-      return t('the start date must be today or later.');
+      return t('the start date must be today or later.') as T;
     }
   }
 
-  private validateEndDate = (endDate: string) => {
+  private validateEndDate = <T>(endDate: T) => {
     const startDate = this.value?.start_date;
     if (!startDate) {
       return t('the start date is required.');

@@ -18,6 +18,7 @@ export class BookingCreated {
   endDate: Date;
   room: string;
   pin: string;
+
   constructor(readonly params: BookingCreatedParams) {
     this.id = params.id;
     this.name = params.name;

@@ -14,7 +14,7 @@ export class OnRegistrationVerifiedCreateBooking {
 
     const pin = await this.pinGenerator.generate();
 
-    this.bookingService.createOne({
+    await this.bookingService.createOne({
       name: registration.name,
       division: registration.division,
       email: registration.email,

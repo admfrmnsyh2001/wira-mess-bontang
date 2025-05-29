@@ -9,6 +9,15 @@ import { OnBookingCreatedSendEmail } from './features/app/OnBookingCreatedSendEm
 import { BookingCreated } from './features/domain/BookingCreated.js';
 import { lookupMailer } from './lib/directus/lookupMailer.js';
 import { Seeder } from './features/app/Seeder.js';
+import { OnAdminCreatedCreateUser } from './features/app/OnAdminCreatedCreateUser.js';
+import { AdminCreated } from './features/domain/AdminCreated.js';
+import { lookupUserService } from './lib/directus/lookupUserService.js';
+import { lookupRoleService } from './lib/directus/lookupRoleService.js';
+import { OnAdminRemovedRemoveUser } from './features/app/OnAdminRemovedRemoveUser.js';
+import { AdminRemoved } from './features/domain/AdminRemoved.js';
+import { OnBookingCreatedCreateAccessRight } from './features/app/OnBookingCreatedCreateAccessRight.js';
+import { lookupBiostarClient } from './runtime/biostarClient.js';
+import { config } from './runtime/config.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -47,20 +56,46 @@ export default defineHook(async (hooks, ctx) => {
     }
   });
 
-  hooks.action('booking.items.create', async (payload) => {
+  hooks.action('booking.items.create', async (meta) => {
+    const evt = new BookingCreated({
+      id: meta.payload.id,
+      name: meta.payload.name,
+      division: meta.payload.division,
+      email: meta.payload.email,
+      startDate: meta.payload.start_date,
+      endDate: meta.payload.end_date,
+      room: meta.payload.room,
+      pin: meta.payload.pin,
+    });
+
+    const roomService = await lookupService(ctx, 'room');
+    const biostarClient = await lookupBiostarClient(ctx);
+    await new OnBookingCreatedCreateAccessRight(biostarClient, roomService).listen(evt);
+
     const mailer = await lookupMailer(ctx);
-    const listener = new OnBookingCreatedSendEmail(mailer);
-    await listener.listen(
-      new BookingCreated({
-        id: payload.id,
-        name: payload.name,
-        division: payload.division,
-        email: payload.email,
-        startDate: payload.start_date,
-        endDate: payload.end_date,
-        room: payload.room,
-        pin: payload.pin,
+    await new OnBookingCreatedSendEmail(mailer).listen(evt);
+  });
+
+  hooks.action('admin.items.create', async (meta) => {
+    const userService = await lookupUserService(ctx);
+    const roleService = await lookupRoleService(ctx);
+    await new OnAdminCreatedCreateUser(userService, roleService).listen(
+      new AdminCreated({
+        email: meta.payload.email,
+        first_name: meta.payload.first_name,
+        last_name: meta.payload.last_name,
+        password: meta.payload.password,
       }),
     );
+  });
+
+  hooks.filter('admin.items.delete', async (payload) => {
+    const adminService = await lookupService(ctx, 'admin');
+    const userService = await lookupUserService(ctx);
+
+    for (const key of payload as string[]) {
+      const admin = await adminService.readOne(key);
+      await new OnAdminRemovedRemoveUser(userService).listen(new AdminRemoved(admin.email));
+    }
   });
 });
