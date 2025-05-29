@@ -17,6 +17,7 @@ import { OnAdminRemovedRemoveUser } from './features/app/OnAdminRemovedRemoveUse
 import { AdminRemoved } from './features/domain/AdminRemoved.js';
 import { OnBookingCreatedCreateAccessRight } from './features/app/OnBookingCreatedCreateAccessRight.js';
 import { lookupBiostarClient } from './runtime/biostarClient.js';
+import { config } from './runtime/config.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -56,6 +57,11 @@ export default defineHook(async (hooks, ctx) => {
   });
 
   hooks.action('booking.items.create', async (meta) => {
+    if (!config.accessRightEnabled) {
+      console.error('disabled access right');
+      return;
+    }
+
     const evt = new BookingCreated({
       id: meta.payload.id,
       name: meta.payload.name,
