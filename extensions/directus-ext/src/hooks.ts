@@ -9,6 +9,10 @@ import { OnBookingCreatedSendEmail } from './features/app/OnBookingCreatedSendEm
 import { BookingCreated } from './features/domain/BookingCreated.js';
 import { lookupMailer } from './lib/directus/lookupMailer.js';
 import { Seeder } from './features/app/Seeder.js';
+import { OnAdminCreatedCreateUser } from './features/app/OnAdminCreatedCreateUser.js';
+import { AdminCreated } from './features/domain/AdminCreated.js';
+import { lookupUserService } from './lib/directus/lookupUserService.js';
+import { lookupRoleService } from './lib/directus/lookupRoleService.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -49,8 +53,7 @@ export default defineHook(async (hooks, ctx) => {
 
   hooks.action('booking.items.create', async (meta) => {
     const mailer = await lookupMailer(ctx);
-    const listener = new OnBookingCreatedSendEmail(mailer);
-    await listener.listen(
+    await new OnBookingCreatedSendEmail(mailer).listen(
       new BookingCreated({
         id: meta.payload.id,
         name: meta.payload.name,
@@ -60,6 +63,19 @@ export default defineHook(async (hooks, ctx) => {
         endDate: meta.payload.end_date,
         room: meta.payload.room,
         pin: meta.payload.pin,
+      }),
+    );
+  });
+
+  hooks.action('admin.items.create', async (meta) => {
+    const userService = await lookupUserService(ctx);
+    const roleService = await lookupRoleService(ctx);
+    await new OnAdminCreatedCreateUser(userService, roleService).listen(
+      new AdminCreated({
+        email: meta.payload.email,
+        first_name: meta.payload.first_name,
+        last_name: meta.payload.last_name,
+        password: meta.payload.password,
       }),
     );
   });
