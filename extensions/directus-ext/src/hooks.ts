@@ -57,11 +57,6 @@ export default defineHook(async (hooks, ctx) => {
   });
 
   hooks.action('booking.items.create', async (meta) => {
-    if (!config.accessRightEnabled) {
-      console.error('disabled access right');
-      return;
-    }
-
     const evt = new BookingCreated({
       id: meta.payload.id,
       name: meta.payload.name,

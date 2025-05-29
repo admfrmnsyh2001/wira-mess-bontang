@@ -11,6 +11,11 @@ export class OnBookingCreatedCreateAccessRight {
   ) {}
 
   async listen(evt: BookingCreated) {
+    if (!config.accessRightEnabled) {
+      console.warn('disabled access right');
+      return;
+    }
+
     const room = await this.roomService.readOne(evt.room);
     const id = generateId(evt.id);
     const groupId = config.biostarUserGroup;
