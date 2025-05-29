@@ -1,9 +1,9 @@
 import { html } from 'lit';
 import { CrudList } from './CrudList.js';
-import type { Query, QueryResult } from '@lib/fw/Query.js';
 import { customElement } from 'lit/decorators.js';
 import { i18n } from '../../runtime/i18n.js';
 import { ConfirmModal } from '@lib/components/ConfirmModal.js';
+import { Toast } from 'bootstrap';
 
 const t = i18n.createTranslator('admin');
 
@@ -30,7 +30,11 @@ export class AdminList extends CrudList {
       icon: 'person-dash',
       execute: async (item) => {
         const confirmed = await ConfirmModal.show();
+        const adminMaster = item.master;
         if (!confirmed) {
+          return;
+        }
+        if (adminMaster) {
           return;
         }
         await this.removeItem(item);
