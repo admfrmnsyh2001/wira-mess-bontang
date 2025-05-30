@@ -4,6 +4,7 @@ import { customElement } from 'lit/decorators.js';
 import '@lib/fields/TextField.js';
 import '@lib/fields/TextareaField.js';
 import { CrudForm } from './CrudForm.js';
+import { Toast } from '@lib/components/Toast.js';
 
 @customElement('a-registration-verify')
 export class RegistrationVerify extends CrudForm {
@@ -78,9 +79,11 @@ export class RegistrationVerify extends CrudForm {
   }
 
   protected submit(value: Record<string, unknown>): Promise<Record<string, string>> {
-    return super.submit({
+    const submit = super.submit({
       room: value.room,
       status: 'verified',
     });
+    Toast.open(t('Has been verified.'));
+    return submit;
   }
 }
