@@ -41,18 +41,18 @@ export class Register extends BasePage {
     if (this.submitted) {
       return html`
         <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 p-3">
-          <div class="text-center" style="max-width: 600px;">
-            <div class="mb-4">
+          <div class="text-center" style="max-width:650px;">
+            <div>
               <i class="bi bi-clock" style="font-size: 4rem; color: #0d6efd;"></i>
             </div>
 
-            <div class="alert alert-success">
-              <h3>${t('Processed')}</h3>
+            <div class="alert">
+              <h3>${t('Processing')}</h3>
               ${t('The registration will be processed shortly. Please return to the register page')}
             </div>
 
-            <a href="/" class="btn btn-primary">
-              ${t('Register Page')}
+            <a href="/" class="btn btn-primary" rel='external'>
+              ${t('Back')}
             </a>
           </div>
         </div>
