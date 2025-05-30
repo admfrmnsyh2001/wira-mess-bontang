@@ -4,6 +4,7 @@ import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { CrudList } from './CrudList.js';
 import { ConfirmModal } from '@lib/components/ConfirmModal.js';
+import { Toast } from '@lib/components/Toast.js';
 
 const t = i18n.createTranslator('admin');
 
@@ -34,9 +35,9 @@ export class RegistrationList extends CrudList {
           return;
         }
         await this.removeItem(item);
+        return Toast.error(t('The registration has been successfully rejected.'));
       },
     });
-
     await super.routeCallback();
   }
 
