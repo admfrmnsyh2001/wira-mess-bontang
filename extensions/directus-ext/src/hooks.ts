@@ -20,6 +20,7 @@ import { lookupBiostarClient } from './runtime/biostarClient.js';
 import { OnBookingExpiredRemoveAccessRight } from './features/app/OnBookingExpiredRemoveAccessRight.js';
 import { BookingExpired } from './features/domain/BookingExpired.js';
 import { config } from './runtime/config.js';
+import { localDay } from './lib/helpers/localDay.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -134,12 +135,12 @@ export default defineHook(async (hooks, ctx) => {
 
     const bookingService = await lookupService(ctx, 'booking');
 
-    const now = new Date();
+    const today = localDay();
     const ids = await bookingService.updateByQuery(
       {
         filter: {
           status: { _eq: 'registered' },
-          end_date: { _lt: now.toJSON() },
+          end_date: { _lt: today },
         },
       },
       { status: 'expired' },
