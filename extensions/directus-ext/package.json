@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "nanoid": "^5.1.5",
+    "pino": "^9.7.0",
     "ws": "^8.18.2"
   },
   "devDependencies": {

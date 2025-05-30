@@ -21,6 +21,7 @@ import { OnBookingExpiredRemoveAccessRight } from './features/app/OnBookingExpir
 import { BookingExpired } from './features/domain/BookingExpired.js';
 import { config } from './runtime/config.js';
 import { localDay } from './lib/helpers/localDay.js';
+import { isServer } from './lib/directus/isServer.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -29,8 +30,6 @@ export default defineHook(async (hooks, ctx) => {
     const seeder = new Seeder(ctx);
     await seeder.execute();
   });
-
-  const pinGenerator = new PinGenerator();
 
   hooks.filter<Record<string, unknown>>('registration.items.create', (payload) => {
     return new RegistrationCreate().execute(payload);
@@ -52,6 +51,7 @@ export default defineHook(async (hooks, ctx) => {
     const registrationService = await lookupService(ctx, 'registration');
     const bookingService = await lookupService(ctx, 'booking');
 
+    const pinGenerator = new PinGenerator();
     const listener = new OnRegistrationVerifiedCreateBooking(registrationService, bookingService, pinGenerator);
 
     for (const key of meta.keys) {
@@ -87,7 +87,7 @@ export default defineHook(async (hooks, ctx) => {
     const bookingService = await lookupService(ctx, 'booking');
     const biostarClient = await lookupBiostarClient(ctx);
 
-    const listener = new OnBookingExpiredRemoveAccessRight(biostarClient);
+    const listener = new OnBookingExpiredRemoveAccessRight(biostarClient, ctx.logger);
 
     for (const key of meta.keys) {
       const booking = await bookingService.readOne(key);
@@ -128,25 +128,27 @@ export default defineHook(async (hooks, ctx) => {
     }
   });
 
-  const onSchedule = async () => {
-    if (!config.accessRightEnabled) {
-      return;
-    }
+  if (isServer()) {
+    const onSchedule = async () => {
+      if (!config.accessRightEnabled) {
+        return;
+      }
 
-    const bookingService = await lookupService(ctx, 'booking');
+      const bookingService = await lookupService(ctx, 'booking');
 
-    const today = localDay();
-    const ids = await bookingService.updateByQuery(
-      {
-        filter: {
-          status: { _eq: 'registered' },
-          end_date: { _lt: today },
+      const today = localDay();
+      const ids = await bookingService.updateByQuery(
+        {
+          filter: {
+            status: { _eq: 'registered' },
+            end_date: { _lt: today },
+          },
         },
-      },
-      { status: 'expired' },
-    );
-    ctx.logger.info('expired found: %d', ids.length);
-  };
-  hooks.schedule('0 * * * *', onSchedule);
-  onSchedule();
+        { status: 'expired' },
+      );
+      ctx.logger.info('expired found: %d', ids.length);
+    };
+    hooks.schedule('0 * * * *', onSchedule);
+    onSchedule();
+  }
 });
