@@ -3,6 +3,7 @@ services:
   directus:
     restart: always
     image: directus/directus:11.8.0
+    # image: directus/directus:11.7.2
     ports:
       - 8055:8055
     labels:
