@@ -1,5 +1,6 @@
 import type { HookExtensionContext } from '@directus/extensions';
 import { lookupService } from '../../lib/directus/lookupService.js';
+import { lookupUserService } from '../../lib/directus/lookupUserService.js';
 
 export class Seeder {
   constructor(private ctx: HookExtensionContext) {}
@@ -20,25 +21,25 @@ export class Seeder {
 
     this.ctx.logger.info('seeding admins...');
 
-    const UserService = this.ctx.services.UsersService;
+    const userService = await lookupUserService(this.ctx);
 
-    const schema = await this.ctx.getSchema();
-
-    const userService = new UserService({ schema });
     const [user] = await userService.readByQuery({
-      query: {
-        email: { contains: 'admin@' },
+      filter: {
+        email: { _contains: 'admin@' },
       },
       limit: 1,
     });
 
-    await adminService.createOne({
-      email: user.email,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      password: '',
-      master: true,
-    });
+    await adminService.createOne(
+      {
+        email: user.email,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        password: '',
+        master: true,
+      },
+      { emitEvents: false },
+    );
   }
 
   async seedPermissions() {
