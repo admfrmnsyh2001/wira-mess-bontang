@@ -157,8 +157,11 @@ export class Register extends BasePage {
     if (!startDate) {
       return t('the start date is required.');
     }
-    if (endDate > startDate) {
+    if (endDate < startDate) {
       return t('end date cannot be less than start date.');
+    }
+    if (endDate <= startDate) {
+      return t('end date cannot be the same as start date.');
     }
   };
   private async onSubmit(evt: Event) {
