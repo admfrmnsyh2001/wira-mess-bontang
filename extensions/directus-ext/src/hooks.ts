@@ -23,6 +23,7 @@ import { config } from './runtime/config.js';
 import { localDay } from './lib/helpers/localDay.js';
 import { isServer } from './lib/directus/isServer.js';
 import { lookupEventBus } from './runtime/eventBus.js';
+import { BiostarListener } from './features/app/BiostarListener.js';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -44,6 +45,7 @@ export default defineHook(async (hooks, ctx) => {
   const biostarClient = await lookupBiostarClient(ctx);
   const userService = await lookupUserService(ctx);
   const roleService = await lookupRoleService(ctx);
+  const biostarEventService = await lookupService(ctx, 'biostar_event');
   const eventBus = await lookupEventBus(ctx);
 
   eventBus.listen(
@@ -55,6 +57,8 @@ export default defineHook(async (hooks, ctx) => {
   eventBus.listen(BookingExpired.name, new OnBookingExpiredRemoveAccessRight(biostarClient, ctx.logger));
   eventBus.listen(AdminCreated.name, new OnAdminCreatedCreateUser(userService, roleService));
   eventBus.listen(AdminRemoved.name, new OnAdminRemovedRemoveUser(userService));
+
+  new BiostarListener(biostarClient, biostarEventService).listen();
 
   hooks.filter<Record<string, unknown>>('registration.items.create', (payload) => {
     return new RegistrationCreate().execute(payload);
