@@ -3,8 +3,8 @@ interface BookingCreatedParams {
   name: string;
   division: string;
   email: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   room: string;
   pin: string;
 }
@@ -14,8 +14,8 @@ export class BookingCreated {
   name: string;
   division: string;
   email: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   room: string;
   pin: string;
 

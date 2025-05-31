@@ -17,8 +17,8 @@ export class OnAdminCreatedCreateUser {
     }
 
     await this.userService.createOne({
-      first_name: evt.first_name,
-      last_name: evt.last_name,
+      first_name: evt.firstName,
+      last_name: evt.lastName,
       email: evt.email,
       password: evt.password,
       role: role.id,

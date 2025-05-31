@@ -1,20 +1,20 @@
 interface AdminCreatedProps {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
 
 export class AdminCreated {
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 
   constructor(readonly props: AdminCreatedProps) {
     this.email = props.email;
-    this.first_name = props.first_name;
-    this.last_name = props.last_name;
+    this.firstName = props.firstName;
+    this.lastName = props.lastName;
     this.password = props.password;
   }
 }

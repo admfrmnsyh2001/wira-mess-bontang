@@ -1,3 +1,3 @@
 export function isServer() {
-  return process.argv[3] === 'start';
+  return process.argv[2] === 'start';
 }

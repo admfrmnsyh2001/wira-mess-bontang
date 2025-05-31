@@ -1,5 +1,8 @@
 import type { BiostarClient } from '../../lib/biostar2/BiostarClient.js';
+import { cardRegistered } from '../../lib/biostar2/card/cardRegistered.js';
+import { createCard } from '../../lib/biostar2/card/createCard.js';
 import { createUser } from '../../lib/biostar2/user/createUser.js';
+import { registerCard } from '../../lib/biostar2/user/registerCard.js';
 import type { Service } from '../../lib/directus/Service.js';
 import { config } from '../../runtime/config.js';
 import type { BookingCreated } from '../domain/BookingCreated.js';
@@ -31,11 +34,12 @@ export class OnBookingCreatedCreateAccessRight {
       name: evt.name,
       startTime,
       expiryTime,
-      pin: evt.pin,
       accessGroupId,
     };
 
     await this.client.request(createUser(params));
+    const card = await this.client.request(createCard(evt.pin, 'csn'));
+    await this.client.request(registerCard(id, card.id));
   }
 }
 
