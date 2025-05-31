@@ -5,6 +5,7 @@ import '@lib/fields/TextField.js';
 import '@lib/fields/TextareaField.js';
 import { CrudForm } from './CrudForm.js';
 import { Toast } from '@lib/components/Toast.js';
+import './components/RoomField.js';
 
 @customElement('a-registration-verify')
 export class RegistrationVerify extends CrudForm {
@@ -68,11 +69,10 @@ export class RegistrationVerify extends CrudForm {
 
       <div class="mb-3 row">
         <div class="col">
-          <f-text-field
-            name="room"
-            label=${t('Room')}
-            required
-          ></f-text-field>
+        <f-room-field
+        name="room"
+        label=${t('Room')}
+        ></f-room-field>
         </div>
       </div>
     `;
