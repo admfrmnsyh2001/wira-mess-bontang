@@ -83,7 +83,7 @@ export class RegistrationVerify extends CrudForm {
       room: value.room,
       status: 'verified',
     });
-    Toast.open(t('Has been verified.'));
+    Toast.open(t('Registration successful verified.'));
     return submit;
   }
 }
