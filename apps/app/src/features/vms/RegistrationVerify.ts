@@ -79,11 +79,11 @@ export class RegistrationVerify extends CrudForm {
   }
 
   protected submit(value: Record<string, unknown>): Promise<Record<string, string>> {
-    const submit = super.submit({
+    const verified = super.submit({
       room: value.room,
       status: 'verified',
     });
     Toast.open(t('Registration successful verified.'));
-    return submit;
+    return verified;
   }
 }
