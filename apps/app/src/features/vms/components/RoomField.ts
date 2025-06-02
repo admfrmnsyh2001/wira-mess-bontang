@@ -3,7 +3,7 @@ import { SelectField } from '@lib/fields/SelectField.js';
 import { directusClient } from '@runtime/directusClient.js';
 import { customElement } from 'lit/decorators.js';
 
-@customElement('f-room-field')
+@customElement('a-room-field')
 export class RoomField extends SelectField {
   protected async createOptions(): Promise<Record<string, string>> {
     const options = await getOptions();
@@ -19,7 +19,7 @@ function getOptions(): Promise<Record<string, string>> {
   }
   promisedOptions = (async () => {
     const options: Record<string, string> = {
-      '': '',
+      '': '---',
     };
     const rows = await directusClient.request(readItems('room'));
 
