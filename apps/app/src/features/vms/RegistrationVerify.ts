@@ -69,10 +69,11 @@ export class RegistrationVerify extends CrudForm {
 
       <div class="mb-3 row">
         <div class="col">
-        <f-room-field
+        <a-room-field
         name="room"
         label=${t('Room')}
-        ></f-room-field>
+        required
+        ></a-room-field>
         </div>
       </div>
     `;

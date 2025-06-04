@@ -26,18 +26,25 @@ export class AddAdmin extends CrudForm {
                     label=${t('Last Name')}
                   ></f-text-field>
                 </div>
-              </div>
 
-              <div class="mb-3 row">
-                <div class="col">
+                <div class="col-md-6">
                   <f-text-field
                     name="email"
-                    label=${t('Email')}
+                    label=${t('User Name')}
                     .rules=${[email()]}
                     required
                   ></f-text-field>
-                </div>
               </div>
+
+                <div class="col-md-6">
+                  <f-text-field
+                    name="password"
+                    label=${t('Pasword')}
+                    required
+                  ></f-text-field>
+              </div>
+
+            </div>
       </div>
     `;
   }
