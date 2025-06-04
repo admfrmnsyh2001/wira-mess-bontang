@@ -2,7 +2,6 @@ import { customElement } from 'lit/decorators.js';
 import { CrudForm } from './CrudForm.js';
 import { html } from 'lit';
 import { t } from '../../runtime/i18n.js';
-import { email } from '@lib/fields/rules.js';
 
 @customElement('a-admin-add')
 export class AddAdmin extends CrudForm {
