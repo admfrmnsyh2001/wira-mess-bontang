@@ -2,7 +2,6 @@ import { customElement } from 'lit/decorators.js';
 import { CrudForm } from './CrudForm.js';
 import { html } from 'lit';
 import { t } from '../../runtime/i18n.js';
-import { email } from '@lib/fields/rules.js';
 
 @customElement('a-admin-add')
 export class AddAdmin extends CrudForm {
@@ -29,9 +28,8 @@ export class AddAdmin extends CrudForm {
 
                 <div class="col-md-6">
                   <f-text-field
-                    name="email"
-                    label=${t('User Name')}
-                    .rules=${[email()]}
+                    name="username"
+                    label=${t('Username')}
                     required
                   ></f-text-field>
               </div>
@@ -47,5 +45,15 @@ export class AddAdmin extends CrudForm {
             </div>
       </div>
     `;
+  }
+
+  protected submit(value: Record<string, unknown>): Promise<Record<string, string>> {
+    const newValue = {
+      first_name: value.first_name,
+      last_name: value.last_name,
+      email: `${value.username}@simplo.id`,
+      password: value.password,
+    };
+    return super.submit(newValue);
   }
 }
