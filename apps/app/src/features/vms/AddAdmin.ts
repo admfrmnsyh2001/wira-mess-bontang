@@ -2,6 +2,7 @@ import { customElement } from 'lit/decorators.js';
 import { CrudForm } from './CrudForm.js';
 import { html } from 'lit';
 import { t } from '../../runtime/i18n.js';
+import { Toast } from '@lib/components/Toast.js';
 
 @customElement('a-admin-add')
 export class AddAdmin extends CrudForm {
@@ -47,13 +48,15 @@ export class AddAdmin extends CrudForm {
     `;
   }
 
-  protected submit(value: Record<string, unknown>): Promise<Record<string, string>> {
+  protected async submit(value: Record<string, unknown>): Promise<Record<string, string>> {
     const newValue = {
       first_name: value.first_name,
       last_name: value.last_name,
       email: `${value.username}@simplo.id`,
       password: value.password,
     };
-    return super.submit(newValue);
+    const submit = await super.submit(newValue);
+    Toast.open(t('New admin added successfully'));
+    return submit;
   }
 }
