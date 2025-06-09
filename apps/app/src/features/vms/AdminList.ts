@@ -38,7 +38,7 @@ export class AdminList extends CrudList {
           return;
         }
         await this.removeItem(item);
-        Toast.error(t('admin successfully delete'));
+        Toast.error(t('The admin has been successfully deleted.'));
       },
     });
 
