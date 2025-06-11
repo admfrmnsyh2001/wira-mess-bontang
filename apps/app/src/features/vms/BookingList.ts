@@ -16,6 +16,18 @@ export class BookingList extends CrudList {
   protected canRemove = false;
 
   protected async load(query: Query): Promise<QueryResult<Record<string, unknown>>> {
+    const search = query.search;
+
+    if (search && /^\d{4}-\d{2}-\d{2}$/.test(search)) {
+      const date = new Date(search);
+      const ts = date.getTime();
+
+      query.filter = {
+        _and: [{ start_date: { _lte: ts } }, { end_date: { _gte: ts } }],
+      };
+
+      delete query.search;
+    }
     return super.load(query);
   }
 
@@ -29,4 +41,5 @@ export class BookingList extends CrudList {
       <c-table-column name="status" label=${t('Status')}></c-table-column>
     `;
   }
+  protected renderFilter() {}
 }
