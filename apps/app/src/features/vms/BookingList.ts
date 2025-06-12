@@ -16,19 +16,23 @@ export class BookingList extends CrudList {
   protected canRemove = false;
 
   protected async load(query: Query): Promise<QueryResult<Record<string, unknown>>> {
-    const search = query.search;
+    const date = query.filter?.date;
 
-    if (search && /^\d{4}-\d{2}-\d{2}$/.test(search)) {
-      const date = new Date(search);
-      const ts = date.getTime();
-
-      query.filter = {
-        _and: [{ start_date: { _lte: ts } }, { end_date: { _gte: ts } }],
+    let filter = {};
+    if (date) {
+      filter = {
+        start_date: {
+          _lte: date,
+        },
+        end_date: {
+          _gte: date,
+        },
       };
-
-      delete query.search;
     }
-    return super.load(query);
+    return super.load({
+      search: query.search,
+      filter: filter,
+    });
   }
 
   protected renderTableColumns(): unknown {
@@ -41,5 +45,32 @@ export class BookingList extends CrudList {
       <c-table-column name="status" label=${t('Status')}></c-table-column>
     `;
   }
-  protected renderFilter() {}
+
+  protected renderSearch(): unknown {
+    return html`
+    <div class="me-2">
+      <input type="date" class="form-control" .value=${(this.query.filter?.date as string) ?? ''} @change=${this.onDateChange}>
+    </div>
+      ${super.renderSearch()}
+    `;
+  }
+
+  private _debounceDateChange = 0;
+  private onDateChange(evt: Event) {
+    const el = evt.target as HTMLInputElement;
+    const value = el.value;
+
+    clearTimeout(this._debounceDateChange);
+    this._debounceDateChange = setTimeout(() => {
+      this.query = {
+        ...this.query,
+        filter: {
+          date: value,
+        },
+      };
+
+      const urlQuery = this.toQueryString(this.query);
+      this.router.replace(urlQuery);
+    }, 1000);
+  }
 }
