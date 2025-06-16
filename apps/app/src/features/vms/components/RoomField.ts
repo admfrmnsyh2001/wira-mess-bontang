@@ -1,65 +1,55 @@
 import { readItems } from '@directus/sdk';
 import { SelectField } from '@lib/fields/SelectField.js';
 import { directusClient } from '@runtime/directusClient.js';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 @customElement('a-room-field')
 export class RoomField extends SelectField {
-  private lastValue: string | undefined;
+  private lastValue?: string;
+
+  @property()
+  private start?: string;
+
+  @property()
+  private end?: string;
 
   protected async createOptions(): Promise<Record<string, string>> {
-    if (this.value !== this.lastValue) {
-      promisedOptions = undefined;
-    }
-    const options = await getOptions();
-    return options;
-  }
-}
+    const options: Record<string, string> = {
+      '': '---',
+    };
 
-let promisedOptions: Promise<Record<string, string>> | undefined;
-
-function getOptions(currentValue?: string): Promise<Record<string, string>> {
-  if (!promisedOptions) {
-    promisedOptions = (async () => {
-      const options: Record<string, string> = {
-        '': '---',
-      };
-
-      try {
-        const rooms = await directusClient.request(readItems('room'));
-        const now = new Date().toISOString();
-        const activeBookings = await directusClient.request(
+    try {
+      const conflictedRooms = (
+        await directusClient.request(
           readItems('booking', {
             filter: {
-              _and: [{ end_date: { _gte: now } }, { status: { _neq: 'cancelled' } }],
+              start_date: { _lt: this.end },
+              end_date: { _gt: this.start },
             },
-            fields: ['room', 'start_date', 'end_date', 'status'],
           }),
-        );
+        )
+      ).map((booking) => booking.room);
 
-        for (const room of rooms) {
-          if (currentValue && room.id === currentValue) {
-            options[room.id] = room.name;
-            continue;
-          }
-
-          const hasActiveBooking = activeBookings.some((booking) => booking.room === room.id);
-          if (!hasActiveBooking) {
-            options[room.id] = room.name;
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching room options:', error);
-
-        const rooms = await directusClient.request(readItems('room'));
-        for (const room of rooms) {
-          options[room.id] = room.name;
-        }
+      let filter = {};
+      if (conflictedRooms.length > 0) {
+        filter = {
+          id: { _nin: conflictedRooms },
+        };
       }
 
-      return options;
-    })();
-  }
+      const rooms = await directusClient.request(readItems('room', { filter }));
 
-  return promisedOptions;
+      for (const room of rooms) {
+        options[room.id] = room.name;
+      }
+    } catch (err) {
+      console.error('Error fetching room options:', err);
+
+      const rooms = await directusClient.request(readItems('room'));
+      for (const room of rooms) {
+        options[room.id] = room.name;
+      }
+    }
+    return options;
+  }
 }
