@@ -42,7 +42,7 @@ export class BookingList extends CrudList {
       <c-table-column name="room" label=${t('Room')} width="80"></c-table-column>
       <c-table-column name="start_date" label=${t('Start Date')}></c-table-column>
       <c-table-column name="end_date" label=${t('End Date')}></c-table-column>
-      <c-table-column name="status" label=${t('Status')}></c-table-column>
+      <c-table-column name="status" label=${t('Status')} .renderer=${renderBadge}></c-table-column>
     `;
   }
 
@@ -74,4 +74,22 @@ export class BookingList extends CrudList {
       this.router.replace(urlQuery);
     }, 1000);
   }
+}
+
+function renderBadge(row: Record<string, unknown>, field: Record<string, unknown>) {
+  const status = row.status as string;
+
+  let badgeClass = '';
+  if (status === 'registered') {
+    badgeClass = 'bg-primary';
+  } else if (status === 'expired') {
+    badgeClass = 'bg-danger';
+  }
+  return html`
+  <td>
+    <span class="badge ${badgeClass} text-capitalize">
+      ${status}
+    </span>
+  </td>
+  `;
 }
