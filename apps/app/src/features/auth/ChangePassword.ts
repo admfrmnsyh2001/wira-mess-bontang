@@ -41,7 +41,7 @@ export class ChangePassword extends BasePage {
     return html`
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
-          <div class="mb-5 text-center">
+          <div class="mb-3 text-center">
             <img src=${logo} alt="App" width="230">
           </div>
           <div class="mb-4 text-center">
