@@ -63,7 +63,7 @@ export class Register extends BasePage {
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="text-center mb-4">
             <h1 class="fw-bold text-primary display-4">${t('Register')}</h1>
-            <p>${t('Temukan kamar terbaik sesuai keinginanmu dan nikmati pengalaman menginap yang nyaman')}</p>
+            <p>${t('Find the perfect room to suit your preferences and enjoy a comfortable stay')}</p>
           </div>
 
           <form @submit=${this.onSubmit}>

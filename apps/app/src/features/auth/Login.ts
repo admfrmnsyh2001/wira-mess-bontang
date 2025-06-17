@@ -27,7 +27,8 @@ export class Login extends BasePage {
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="mb-5 text-center">
-            <img src=${logo} alt="App" width="230">
+            <h1 class="fw-bold text-primary display-4">${t('Login')}</h1>
+            <p>${t('Enter your email and password to login our dashborad')}</p>
           </div>
 
           <form @submit=${this.onSubmit}>
