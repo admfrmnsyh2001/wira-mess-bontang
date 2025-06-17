@@ -37,9 +37,9 @@ export class BookingList extends CrudList {
 
   protected renderTableColumns(): unknown {
     return html`
-      <c-table-column name="name" label=${t('Name')}></c-table-column>
-      <c-table-column name="email" label=${t('Email')}></c-table-column>
-      <c-table-column name="room" label=${t('Room')}></c-table-column>
+      <c-table-column name="name" label=${t('Name')} width="250"></c-table-column>
+      <c-table-column name="email" label=${t('Email')} width="250"></c-table-column>
+      <c-table-column name="room" label=${t('Room')} width="80"></c-table-column>
       <c-table-column name="start_date" label=${t('Start Date')}></c-table-column>
       <c-table-column name="end_date" label=${t('End Date')}></c-table-column>
       <c-table-column name="status" label=${t('Status')}></c-table-column>
