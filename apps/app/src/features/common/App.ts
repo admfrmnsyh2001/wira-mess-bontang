@@ -66,8 +66,8 @@ export class App extends LitElement {
       </style>
 
       <nav class="border-end bg-body-tertiary">
-        <div class="p-3 pb-0">
-          <img src="${logo}" alt="" style="width: 100%">
+        <div class="p-3 pb-0 d-flex justify-content-center">
+          <img src="${logo}" alt="" style="width: 85%">
           <!-- <div class="text-danger small text-center">
             ${config.dev ? 'dev' : ''}
           </div> -->

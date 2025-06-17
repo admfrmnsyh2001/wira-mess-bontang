@@ -48,6 +48,7 @@ export class BookingList extends CrudList {
 
   protected renderSearch(): unknown {
     return html`
+    <label for="date" class="mt-2 me-2">${t('Filter by date')}</label>
     <div class="me-2">
       <input type="date" class="form-control" .value=${(this.query.filter?.date as string) ?? ''} @change=${this.onDateChange}>
     </div>

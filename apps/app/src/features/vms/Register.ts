@@ -61,8 +61,11 @@ export class Register extends BasePage {
     return html`
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
+          <div class="mb-3 text-center">
+            <img src=${logo} alt="App" width="230">
+          </div>
           <div class="text-center mb-4">
-            <h1 class="fw-bold text-primary display-4">${t('Register')}</h1>
+            <h1 class="fw-bold text-primary">${t('Register')}</h1>
             <p>${t('Find the perfect room to suit your preferences and enjoy a comfortable stay')}</p>
           </div>
 
