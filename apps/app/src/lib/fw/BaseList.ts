@@ -111,7 +111,7 @@ export abstract class BaseList<T extends object = Record<string, unknown>> exten
 
   protected renderInfo(): unknown {
     return html`
-      <div class="me-3 d-flex align-items-center">
+      <div class="me-3 d-flex align-items-center border-end px-3">
         ${this.items?.length ?? 0} ${this.count ? ` of ${this.count}` : ''} items
       </div>
     `;

@@ -9,8 +9,8 @@ import { BasePage } from '@lib/fw/BasePage.js';
 import type { Rule } from '@lib/fields/Rule.js';
 import { directusClient } from '../../runtime/directusClient.js';
 import { updateMe } from '@directus/sdk';
-import logo from '@runtime/img/simplo.png';
 import { t } from '../../runtime/i18n.js';
+import logo from '@runtime/img/simplo.png';
 
 @customElement('a-change-password')
 export class ChangePassword extends BasePage {
@@ -41,8 +41,12 @@ export class ChangePassword extends BasePage {
     return html`
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
-          <div class="mb-5 text-center">
+          <div class="mb-3 text-center">
             <img src=${logo} alt="App" width="230">
+          </div>
+          <div class="mb-4 text-center">
+            <h1 class="fw-bold text-primary">${t('Change Password')}</h1>
+            <p>${'Please enter your new password below to change your password'}</p>
           </div>
 
           <form @submit=${this.onSubmit}>

@@ -73,6 +73,8 @@ export class RegistrationVerify extends CrudForm {
         name="room"
         label=${t('Room')}
         required
+        .start=${this.value?.start_date}
+        .end=${this.value?.end_date}
         ></a-room-field>
         </div>
       </div>
