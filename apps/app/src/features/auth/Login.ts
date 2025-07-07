@@ -28,7 +28,7 @@ export class Login extends BasePage {
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="mb-3 text-center">
             <img src=${logo} alt="App" width="230">
-            <div class="bold text-primary">${t('Login')}</div>
+            <div class="text-primary">${t('Login')}</div>
           </div>
           <div class="mb-5 text-center">
             <p>${t('Enter your email and password to login our dashborad')}</p>

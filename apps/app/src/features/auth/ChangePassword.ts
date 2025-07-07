@@ -43,9 +43,9 @@ export class ChangePassword extends BasePage {
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="mb-3 text-center">
             <img src=${logo} alt="App" width="230">
+            <div class="text-primary">${t('Change Password')}</div>
           </div>
           <div class="mb-4 text-center">
-            <h1 class="fw-bold text-primary">${t('Change Password')}</h1>
             <p>${'Please enter your new password below to change your password'}</p>
           </div>
 
