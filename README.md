@@ -25,3 +25,8 @@ pnpm --filter directus-ext dev
 ```sh
 pnpm --filter app dev
 ```
+## Tunneling
+
+```
+sudo socat TCP-LISTEN:443,fork TCP:192.168.122.203:443
+```

@@ -2,7 +2,8 @@ name: wira-messbontang
 services:
   directus:
     restart: always
-    image: directus/directus:11.4.0
+    image: directus/directus:11.8.0
+    # image: directus/directus:11.7.2
     ports:
       - 8055:8055
     labels:
@@ -14,7 +15,16 @@ services:
     volumes:
       - ./database:/directus/database
       - ./uploads:/directus/uploads
+      - ./schema:/directus/schema
       - ../../extensions:/directus/extensions
+    command: >
+      sh -c "
+        npx directus bootstrap &&
+        npx directus schema apply -y ./schema/schema.yml &&
+        npx directus start
+      "
+    env_file:
+      - .env
     environment:
       KEY: "directus-key"
       SECRET: "directus-secret"
@@ -35,9 +45,6 @@ services:
       CORS_CREDENTIALS: 'true'
       CORS_MAX_AGE: '180000'
       EXTENSIONS_AUTO_RELOAD: true
-      # APP_BIOSTAR_HOST: "host.docker.internal"
-      # APP_BIOSTAR_PASSWORD: "Password1"
-      # APP_BIOSTAR_USER_GROUP: "1002"
 
   app:
     restart: always
@@ -54,7 +61,7 @@ services:
 
   traefik:
     restart: always
-    image: traefik:v3.0.4
+    image: traefik:v3.6.7
     command:
       #- "--log.level=DEBUG"
       - "--api.insecure=true"
