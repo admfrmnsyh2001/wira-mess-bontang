@@ -72,6 +72,29 @@ export default defineHook(async (hooks, ctx) => {
     return payload;
   });
 
+  hooks.action('registration.items.create', async (meta) => {
+    console.log('>>>', meta)
+    await mailer.send({
+      to: `muhammad.yusuf@kpi.co.id`,
+      subject: 'Booking Request',
+      html:`
+	<p>
+	   Booking Request 
+	</p>
+
+	<p>
+	Informasi sistem mendeteksi adanya pembuatan jadwal booking baru atas nama berikut:
+	<br>
+	Name: ${meta.payload.name}
+	</br>
+	<br>
+	<a href="https://192.168.5.102:9443/admin" style="color: #1a73e8; font-weight: bold; text-decoration: underline;">https://192.168.5.102:9443/admin</a>
+	</br>
+        </p>
+       `.trim(),
+     });
+   });
+
   hooks.action('registration.items.update', async (meta) => {
     if (meta.payload.status === 'verified') {
       for (const key of meta.keys) {
