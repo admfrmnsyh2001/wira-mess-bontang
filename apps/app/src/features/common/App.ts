@@ -3,7 +3,7 @@ import { html, LitElement } from 'lit';
 import { router } from '../../runtime/router.js';
 import '@lib/components/Menu.js';
 import { createMenu } from '../../runtime/menu.js';
-import logo from '@runtime/img/simplo.png';
+import logo from '@runtime/img/kpi.jpeg';
 import type { MenuGroup } from '@lib/components/Menu.js';
 import { config } from '../../runtime/config.js';
 
@@ -67,7 +67,7 @@ export class App extends LitElement {
 
       <nav class="border-end bg-body-tertiary">
         <div class="p-3 pb-0 d-flex justify-content-center">
-          <img src="${logo}" alt="" style="width: 85%">
+          <img src="${logo}" alt="KPI" style="width: 85%">
           <!-- <div class="text-danger small text-center">
             ${config.dev ? 'dev' : ''}
           </div> -->
