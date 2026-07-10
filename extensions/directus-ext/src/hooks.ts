@@ -76,24 +76,14 @@ export default defineHook(async (hooks, ctx) => {
     console.log('>>>', meta)
     await mailer.send({
       to: `it@kpi.co.id`,
-      subject: 'Booking Request',
+      subject: 'New Booking Request',
       html:`
+	<p>A new booking request has been submitted.</p>
 	<p>
-	   Booking Request 
+	  <b>Name:</b> ${meta.payload.name}<br>
+	  <b>Date:</b> ${meta.payload.start_date} - ${meta.payload.end_date}<br>
 	</p>
-
-	<p>
-	Informasi sistem mendeteksi adanya pembuatan jadwal booking baru atas nama berikut:
-	<br>
-	Name: ${meta.payload.name}
-	</br>
-	<br>
-	Tanggal: ${meta.payload.start_date} s/d ${meta.payload.end_date}
-	</br>
-	<br>
-	<a href="https://192.168.5.102:9443/admin" style="color: #1a73e8; font-weight: bold; text-decoration: underline;">https://192.168.5.102:9443/admin</a>
-	</br>
-        </p>
+	<p>Review: <a href="https://192.168.5.102:9443/admin" style="color: #1a73e8;">Admin Panel</a></p>
        `.trim(),
      });
    });

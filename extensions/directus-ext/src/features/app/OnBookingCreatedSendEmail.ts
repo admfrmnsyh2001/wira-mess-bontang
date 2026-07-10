@@ -7,22 +7,14 @@ export class OnBookingCreatedSendEmail {
   async listen(evt: BookingCreated) {
     await this.mailer.send({
       to: `${evt.name} <${evt.email}>`,
-      subject: 'Your booking has been created',
+      subject: 'Booking Confirmed',
       html: `
+        <p>Your booking has been confirmed. Please use the PIN below at check-in time.</p>
         <p>
-          Your booking has been successfully created. You may proceed directly
-          to your room and use the provided PIN at the scheduled time.
-        </p>
-
-        <p>
-          Scheduled Time: ${evt.startDate} to ${evt.endDate}
-          <br>
-          Name: ${evt.name}
-          <br>
-          Room: ${evt.room}
-          <br>
-          PIN: ${evt.pin}
-          <br>
+          <b>Name:</b> ${evt.name}<br>
+          <b>Room:</b> ${evt.room}<br>
+          <b>Date:</b> ${evt.startDate} - ${evt.endDate}<br>
+          <b>PIN:</b> ${evt.pin}<br>
         </p>
       `.trim(),
     });
