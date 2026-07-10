@@ -75,7 +75,7 @@ export default defineHook(async (hooks, ctx) => {
   hooks.action('registration.items.create', async (meta) => {
     console.log('>>>', meta)
     await mailer.send({
-      to: `muhammad.yusuf@kpi.co.id`,
+      to: `it@kpi.co.id`,
       subject: 'Booking Request',
       html:`
 	<p>
