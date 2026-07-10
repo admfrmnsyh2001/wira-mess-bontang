@@ -6,6 +6,7 @@ interface BookingCreatedParams {
   startDate: string;
   endDate: string;
   room: string;
+  roomId: string;
   pin: string;
 }
 
@@ -17,6 +18,7 @@ export class BookingCreated {
   startDate: string;
   endDate: string;
   room: string;
+  roomId: string;
   pin: string;
 
   constructor(readonly params: BookingCreatedParams) {
@@ -27,6 +29,7 @@ export class BookingCreated {
     this.startDate = params.startDate;
     this.endDate = params.endDate;
     this.room = params.room;
+    this.roomId = params.roomId;
     this.pin = params.pin;
   }
 }

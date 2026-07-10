@@ -116,6 +116,7 @@ export default defineHook(async (hooks, ctx) => {
       email: meta.payload.email,
       startDate: meta.payload.start_date,
       endDate: meta.payload.end_date,
+      roomId: meta.payload.room,
       room: roomData?.name ?? meta.payload.room,
       pin: meta.payload.pin,
     });
@@ -147,6 +148,7 @@ export default defineHook(async (hooks, ctx) => {
           email: booking.email,
           startDate: booking.start_date,
           endDate: booking.end_date,
+          roomId: booking.room,
           room: roomData?.name ?? booking.room,
           pin: booking.pin,
         });

@@ -19,7 +19,7 @@ export class OnBookingCreatedCreateAccessRight {
       return;
     }
 
-    const room = await this.roomService.readOne(evt.room);
+    const room = await this.roomService.readOne(evt.roomId);
     const id = generateId(evt.id);
     const groupId = config.biostarUserGroup;
     const checkinTime = config.checkinTime;
