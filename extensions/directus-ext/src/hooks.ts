@@ -108,6 +108,7 @@ export default defineHook(async (hooks, ctx) => {
   });
 
   hooks.action('booking.items.create', async (meta) => {
+    const roomData = await roomService.readOne(meta.payload.room);
     const evt = new BookingCreated({
       id: meta.key,
       name: meta.payload.name,
@@ -115,7 +116,7 @@ export default defineHook(async (hooks, ctx) => {
       email: meta.payload.email,
       startDate: meta.payload.start_date,
       endDate: meta.payload.end_date,
-      room: meta.payload.room,
+      room: roomData?.name ?? meta.payload.room,
       pin: meta.payload.pin,
     });
     await eventBus.dispatch(evt);
@@ -138,6 +139,7 @@ export default defineHook(async (hooks, ctx) => {
         });
         await eventBus.dispatch(evt);
       } else if (meta.payload.status === 'registered') {
+        const roomData = await roomService.readOne(booking.room);
         const evt = new BookingCreated({
           id: booking.id,
           name: booking.name,
@@ -145,7 +147,7 @@ export default defineHook(async (hooks, ctx) => {
           email: booking.email,
           startDate: booking.start_date,
           endDate: booking.end_date,
-          room: booking.room,
+          room: roomData?.name ?? booking.room,
           pin: booking.pin,
         });
         await eventBus.dispatch(evt);

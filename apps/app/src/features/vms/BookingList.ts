@@ -3,6 +3,8 @@ import { i18n } from '../../runtime/i18n.js';
 import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { CrudList } from './CrudList.js';
+import { readItems } from '@directus/sdk';
+import { directusClient } from '../../runtime/directusClient.js';
 
 const t = i18n.createTranslator('admin');
 
@@ -29,17 +31,22 @@ export class BookingList extends CrudList {
         },
       };
     }
-    return super.load({
+
+    // biome-ignore lint/suspicious/noExplicitAny: needed for Directus fields typing
+    const items = await directusClient.request(readItems('booking', {
       search: query.search,
-      filter: filter,
-    });
+      fields: ['*', 'room.name', 'room.id'] as any,
+      filter,
+    }));
+
+    return { items };
   }
 
   protected renderTableColumns(): unknown {
     return html`
       <c-table-column name="name" label=${t('Name')} width="250"></c-table-column>
       <c-table-column name="email" label=${t('Email')} width="250"></c-table-column>
-      <c-table-column name="room" label=${t('Room')} width="80"></c-table-column>
+      <c-table-column name="room" label=${t('Room')} width="150" .renderer=${renderRoom}></c-table-column>
       <c-table-column name="start_date" label=${t('Start Date')}></c-table-column>
       <c-table-column name="end_date" label=${t('End Date')}></c-table-column>
       <c-table-column name="status" label=${t('Status')} .renderer=${renderBadge}></c-table-column>
@@ -74,6 +81,13 @@ export class BookingList extends CrudList {
       this.router.replace(urlQuery);
     }, 1000);
   }
+}
+
+function renderRoom(row: Record<string, unknown>) {
+  // biome-ignore lint/suspicious/noExplicitAny: room can be object or string
+  const room = row.room as any;
+  const roomName = room?.name ?? room ?? '-';
+  return html`<td>${roomName}</td>`;
 }
 
 function renderBadge(row: Record<string, unknown>, field: Record<string, unknown>) {
