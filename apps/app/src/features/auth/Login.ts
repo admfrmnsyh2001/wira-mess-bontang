@@ -6,6 +6,7 @@ import { RecordField } from '@lib/fields/RecordField.js';
 import { Toast } from '@lib/components/Toast.js';
 import { auth } from '../../runtime/auth.js';
 import { BasePage } from '@lib/fw/BasePage.js';
+import kpiLogo from '@runtime/img/kpi.jpeg';
 import logo from '@runtime/img/simplo.png';
 import { t } from '../../runtime/i18n.js';
 
@@ -27,7 +28,7 @@ export class Login extends BasePage {
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="mb-3 text-center">
-            <img src=${logo} alt="App" width="230">
+            <img src=${kpiLogo} alt="KPI" width="230">
             <div class="text-primary">${t('Login')}</div>
           </div>
           <div class="mb-5 text-center">
@@ -63,6 +64,10 @@ export class Login extends BasePage {
               ></c-button>
             </div>
           </form>
+          <div class="mt-5 text-center text-muted">
+            <small>Powered by</small><br>
+            <img src=${logo} alt="Simplo" width="100">
+          </div>
         </div>
       </div>
     `;

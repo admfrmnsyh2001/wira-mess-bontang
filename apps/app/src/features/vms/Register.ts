@@ -7,6 +7,7 @@ import { Toast } from '@lib/components/Toast.js';
 import { BasePage } from '@lib/fw/BasePage.js';
 import { directusClient } from '../../runtime/directusClient.js';
 import { createItem } from '@directus/sdk';
+import kpiLogo from '@runtime/img/kpi.jpeg';
 import logo from '@runtime/img/simplo.png';
 import { t } from '../../runtime/i18n.js';
 import { email } from '@lib/fields/rules.js';
@@ -62,7 +63,7 @@ export class Register extends BasePage {
       <div class="v-full d-flex align-items-center justify-content-center">
         <div class="p-3" style="width: 100%; max-width: 600px">
           <div class="mb-3 text-center">
-            <img src=${logo} alt="App" width="230">
+            <img src=${kpiLogo} alt="KPI" width="230">
             <div class="text-primary">${t('Register')}</div>
           </div>
           <div class="text-center mb-4">
@@ -138,6 +139,10 @@ export class Register extends BasePage {
               <button type="button" class="btn btn-secondary" @click=${() => history.back()}>${t('Back')}</button>
             </div>
           </form>
+          <div class="mt-5 text-center text-muted">
+            <small>Powered by</small><br>
+            <img src=${logo} alt="Simplo" width="100">
+          </div>
         </div>
       </div>
     `;
