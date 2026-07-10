@@ -33,11 +33,15 @@ export class BookingList extends CrudList {
     }
 
     // biome-ignore lint/suspicious/noExplicitAny: needed for Directus fields typing
-    const items = await directusClient.request(readItems('booking', {
-      search: query.search,
-      fields: ['*', 'room.name', 'room.id'] as any,
+    const queryParams: any = {
+      fields: ['*', 'room.name', 'room.id'],
       filter,
-    }));
+    };
+    if (query.search) {
+      queryParams.search = query.search;
+    }
+
+    const items = await directusClient.request(readItems('booking', queryParams));
 
     return { items };
   }
