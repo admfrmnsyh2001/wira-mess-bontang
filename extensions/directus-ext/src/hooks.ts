@@ -50,7 +50,7 @@ export default defineHook(async (hooks, ctx) => {
 
   eventBus.listen(
     RegistrationVerified.name,
-    new OnRegistrationVerifiedCreateBooking(registrationService, bookingService, pinGenerator),
+    new OnRegistrationVerifiedCreateBooking(registrationService, bookingService, pinGenerator, roomService),
   );
   eventBus.listen(BookingCreated.name, new OnBookingCreatedCreateAccessRight(biostarClient, roomService));
   eventBus.listen(BookingCreated.name, new OnBookingCreatedSendEmail(mailer));

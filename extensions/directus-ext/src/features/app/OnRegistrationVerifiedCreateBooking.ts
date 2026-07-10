@@ -7,6 +7,7 @@ export class OnRegistrationVerifiedCreateBooking {
     readonly registrationService: Service,
     readonly bookingService: Service,
     readonly pinGenerator: PinGenerator,
+    readonly roomService: Service,
   ) {}
 
   async listen(evt: RegistrationVerified) {
@@ -16,13 +17,16 @@ export class OnRegistrationVerifiedCreateBooking {
 
     // TODO: make sure pin unique
 
+    // Lookup room name by ID so booking stores the name, not the ID
+    const room = await this.roomService.readOne(registration.room);
+
     await this.bookingService.createOne({
       name: registration.name,
       division: registration.division,
       email: registration.email,
       start_date: registration.start_date,
       end_date: registration.end_date,
-      room: registration.room,
+      room: room.name,
       status: 'registered',
       registered_at: new Date().toJSON(),
       pin,
