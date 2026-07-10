@@ -35,8 +35,7 @@ services:
       WEBSOCKETS_ENABLED: true
       EMAIL_VERIFY_SETUP: true
       EMAIL_TRANSPORT: "smtp"
-      EMAIL_FROM: "notification@kpi.co.id"
-      EMAIL_FROM_NAME: "KPI - Room Booking System"
+      EMAIL_FROM: "KPI - Room Booking System <notification@kpi.co.id>"
       EMAIL_SMTP_HOST: "smtp.gmail.com"
       EMAIL_SMTP_PORT: 587
       EMAIL_SMTP_USER: "notification@kpi.co.id"
