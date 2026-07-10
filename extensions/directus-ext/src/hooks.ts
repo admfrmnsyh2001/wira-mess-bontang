@@ -88,6 +88,9 @@ export default defineHook(async (hooks, ctx) => {
 	Name: ${meta.payload.name}
 	</br>
 	<br>
+	Tanggal: ${meta.payload.start_date} s/d ${meta.payload.end_date}
+	</br>
+	<br>
 	<a href="https://192.168.5.102:9443/admin" style="color: #1a73e8; font-weight: bold; text-decoration: underline;">https://192.168.5.102:9443/admin</a>
 	</br>
         </p>
