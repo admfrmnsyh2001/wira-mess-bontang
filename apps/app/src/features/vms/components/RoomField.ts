@@ -37,7 +37,7 @@ export class RoomField extends SelectField {
         };
       }
 
-      const rooms = await directusClient.request(readItems('room', { filter }));
+      const rooms = await directusClient.request(readItems('room', { filter, sort: ['name'] }));
 
       for (const room of rooms) {
         options[room.id] = room.name;
@@ -45,7 +45,7 @@ export class RoomField extends SelectField {
     } catch (err) {
       console.error('Error fetching room options:', err);
 
-      const rooms = await directusClient.request(readItems('room'));
+      const rooms = await directusClient.request(readItems('room', { sort: ['name'] }));
       for (const room of rooms) {
         options[room.id] = room.name;
       }
