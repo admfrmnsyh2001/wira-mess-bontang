@@ -36,7 +36,7 @@ services:
       EMAIL_VERIFY_SETUP: true
       EMAIL_TRANSPORT: "smtp"
       EMAIL_FROM: "KPI - Room Booking System <notification@kpi.co.id>"
-      EMAIL_SMTP_HOST: "smtp.gmail.com"
+      EMAIL_SMTP_HOST: "smtp-relay.gmail.com"
       EMAIL_SMTP_PORT: 587
       EMAIL_SMTP_USER: "notification@kpi.co.id"
       EMAIL_SMTP_PASSWORD: "frlczeztvbyxznyk"
