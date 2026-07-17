@@ -82,6 +82,7 @@ export class Register extends BasePage {
                     name="name"
                     label=${t('Name')}
                     required
+                    .rules=${[this.validateName]}
                   ></f-text-field>
                 </div>
               </div>
@@ -153,6 +154,12 @@ export class Register extends BasePage {
     this.value = { ...target.value };
     this.errors = target.errors;
   }
+
+  private validateName = <T>(name: T): T | undefined => {
+    if (typeof name === 'string' && !/^[a-zA-Z0-9\s]+$/.test(name)) {
+      return t('Name cannot contain special characters') as T;
+    }
+  };
 
   private validateStartDate<T>(startDate: T): T | undefined {
     const today = new Date().toISOString().split('T')[0];
