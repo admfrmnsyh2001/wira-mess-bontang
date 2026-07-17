@@ -15,7 +15,7 @@ export class RegistrationList extends CrudList {
 
   protected canAdd = false;
   protected canEdit = false;
-  protected canRemove = false;
+  protected canRemove = true;
 
   async routeCallback(): Promise<void> {
     this.itemActions.push({

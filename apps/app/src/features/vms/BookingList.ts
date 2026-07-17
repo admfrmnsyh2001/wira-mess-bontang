@@ -15,7 +15,7 @@ export class BookingList extends CrudList {
 
   protected canAdd = false;
   protected canEdit = false;
-  protected canRemove = false;
+  protected canRemove = true;
 
   protected async load(query: Query): Promise<QueryResult<Record<string, unknown>>> {
     const date = query.filter?.date;
