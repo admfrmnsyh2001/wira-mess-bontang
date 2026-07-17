@@ -9,7 +9,7 @@ export class SelectField extends Field<string> {
   };
 
   @state()
-  protected options?: Record<string, string>;
+  protected options?: Array<{ value: string; label: string }>;
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
@@ -17,14 +17,14 @@ export class SelectField extends Field<string> {
     this.options = await this.createOptions();
   }
 
-  protected async createOptions(): Promise<Record<string, string>> {
+  protected async createOptions(): Promise<Array<{ value: string; label: string }>> {
     await Promise.resolve();
 
-    const options: Record<string, string> = {};
+    const options: Array<{ value: string; label: string }> = [];
 
     for (const el of this.children) {
       if (el instanceof HTMLOptionElement) {
-        options[el.value] = el.text;
+        options.push({ value: el.value, label: el.text });
       }
     }
 
@@ -53,10 +53,10 @@ export class SelectField extends Field<string> {
         @blur=${this.onMutate}
         ?disabled=${this.disabled}
       >
-        ${Object.keys(options).map(
-          (key) => html`
-          <option value=${key} ?selected=${(this.value ?? '') === key}>
-            ${options[key]}
+        ${options.map(
+          (opt) => html`
+          <option value=${opt.value} ?selected=${(this.value ?? '') === opt.value}>
+            ${opt.label}
           </option>
         `,
         )}

@@ -13,10 +13,10 @@ export class RoomField extends SelectField {
   @property()
   private end?: string;
 
-  protected async createOptions(): Promise<Record<string, string>> {
-    const options: Record<string, string> = {
-      '': '---',
-    };
+  protected async createOptions(): Promise<Array<{ value: string; label: string }>> {
+    const options: Array<{ value: string; label: string }> = [
+      { value: '', label: '---' }
+    ];
 
     try {
       const conflictedRooms = (
@@ -40,14 +40,14 @@ export class RoomField extends SelectField {
       const rooms = await directusClient.request(readItems('room', { filter, sort: ['name'] }));
 
       for (const room of rooms) {
-        options[room.id] = room.name;
+        options.push({ value: room.id, label: room.name });
       }
     } catch (err) {
       console.error('Error fetching room options:', err);
 
       const rooms = await directusClient.request(readItems('room', { sort: ['name'] }));
       for (const room of rooms) {
-        options[room.id] = room.name;
+        options.push({ value: room.id, label: room.name });
       }
     }
     return options;
