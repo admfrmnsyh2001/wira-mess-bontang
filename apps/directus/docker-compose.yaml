@@ -48,7 +48,7 @@ services:
       CORS_EXPOSED_HEADERS: 'Content-Range'
       CORS_CREDENTIALS: 'true'
       CORS_MAX_AGE: '180000'
-      EXTENSIONS_AUTO_RELOAD: true
+      EXTENSIONS_AUTO_RELOAD: false
 
   app:
     restart: always
