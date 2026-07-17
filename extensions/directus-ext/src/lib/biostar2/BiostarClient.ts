@@ -119,7 +119,9 @@ export class BiostarClient {
 
       return result;
     } catch (err) {
+      log('Biostar API Request Failed for URL:', config.url, err);
       const mappedErr = await errorMapper(err);
+      log('Mapped Error:', mappedErr);
       throw mappedErr;
     }
   }
