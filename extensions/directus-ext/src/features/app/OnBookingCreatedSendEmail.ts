@@ -1,4 +1,5 @@
 import type { Mailer } from '../../lib/directus/Mailer.js';
+import { formatRoomName } from '../../lib/helpers/formatRoomName.js';
 import type { BookingCreated } from '../domain/BookingCreated.js';
 
 export class OnBookingCreatedSendEmail {
@@ -12,9 +13,9 @@ export class OnBookingCreatedSendEmail {
         <p>Your booking has been confirmed. Please use the PIN below at check-in time.</p>
         <p>
           <b>Name:</b> ${evt.name}<br>
-          <b>Room:</b> ${evt.room}<br>
+          <b>Room:</b> ${formatRoomName(evt.room)}<br>
           <b>Date:</b> ${evt.startDate} - ${evt.endDate}<br>
-          <b>PIN:</b> ${evt.pin}<br>
+          <b>PIN:</b> ${evt.pin}#<br>
         </p>
       `.trim(),
     });

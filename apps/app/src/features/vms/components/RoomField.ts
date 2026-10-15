@@ -1,5 +1,6 @@
 import { readItems } from '@directus/sdk';
 import { SelectField } from '@lib/fields/SelectField.js';
+import { formatRoomName } from '@lib/formatters/formatRoomName.js';
 import { directusClient } from '@runtime/directusClient.js';
 import { customElement, property } from 'lit/decorators.js';
 
@@ -40,14 +41,14 @@ export class RoomField extends SelectField {
       const rooms = await directusClient.request(readItems('room', { filter, sort: ['name'] }));
 
       for (const room of rooms) {
-        options.push({ value: room.id, label: room.name });
+        options.push({ value: room.id, label: formatRoomName(room.name) });
       }
     } catch (err) {
       console.error('Error fetching room options:', err);
 
       const rooms = await directusClient.request(readItems('room', { sort: ['name'] }));
       for (const room of rooms) {
-        options.push({ value: room.id, label: room.name });
+        options.push({ value: room.id, label: formatRoomName(room.name) });
       }
     }
     return options;

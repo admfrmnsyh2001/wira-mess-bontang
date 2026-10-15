@@ -4,7 +4,7 @@ const accessRightEnabled = Boolean(BIOSTAR_USER_GROUP);
 
 export const config = {
   accessRightEnabled,
-  checkoutTime: '12:00',
-  checkinTime: '14:00',
+  checkoutTime: '13:00',
+  checkinTime: '13:00',
   biostarUserGroup: BIOSTAR_USER_GROUP,
 };

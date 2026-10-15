@@ -5,6 +5,7 @@ import { customElement } from 'lit/decorators.js';
 import { CrudList } from './CrudList.js';
 import { readItems } from '@directus/sdk';
 import { directusClient } from '../../runtime/directusClient.js';
+import { formatRoomName } from '@lib/formatters/formatRoomName.js';
 
 const t = i18n.createTranslator('admin');
 
@@ -90,8 +91,8 @@ export class BookingList extends CrudList {
 function renderRoom(row: Record<string, unknown>) {
   // biome-ignore lint/suspicious/noExplicitAny: room can be object or string
   const room = row.room as any;
-  const roomName = room?.name ?? room ?? '-';
-  return html`<td>${roomName}</td>`;
+  const roomName = room?.name ?? room;
+  return html`<td>${roomName ? formatRoomName(String(roomName)) : '-'}</td>`;
 }
 
 function renderBadge(row: Record<string, unknown>, field: Record<string, unknown>) {
